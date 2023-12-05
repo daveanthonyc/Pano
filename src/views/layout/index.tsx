@@ -1,6 +1,11 @@
+import Sidebar from "../../components/Sidebar"
+import { Box } from '@mui/material'
+
 function Layout() {
   return (
-    <div>This is a test</div>
+    <Box>
+        <Sidebar></Sidebar>
+    </Box>
   )
 }
 

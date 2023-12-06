@@ -60,7 +60,7 @@ function Sidebar() {
                             'secondary.main' : 'body.main',
                     backgroundColor:
                         active === lcText ?
-                            'secondary.light' : 'white'
+                            'secondary.light' : 'white',
                     }} >
                     <ListItemButton sx={{
                         padding: 0, 
@@ -74,7 +74,7 @@ function Sidebar() {
                         } >
                         {item.icon}
                         </IconButton>
-                        <Typography color='body' fontWeight='500'>{item.text}</Typography>
+                        <Typography color='body' fontSize='14px' fontWeight='400'>{item.text}</Typography>
                     </ListItemButton>
                 </ListItem>
             )})

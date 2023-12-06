@@ -11,11 +11,14 @@ const colorSwatch = {
     warningYellow : "rgb(250,204,21)", // done
     error : "rgba(239,68,68,0.2)", // done
     greenAccent: "rgb(22,163,74)", // done
+    lightGreen: "rgba(34,197,94,0.1)", // done
+    darkGreen: "rgb(34,197,94)", // done
     greyAccent: "rgb(217,217,217)", //
     purpleAccent: "rgb(214,135,255)", // done
 
     // Text
-    black : "rgb(23,23,23)", // done
+    //black : "rgb(23,23,23)", // done
+    black : "rgb(58,58,58)", // done
     lightGrey : "rgb(229,231,235)", // done
     lighterGrey: "rgb(245,245,245)",
 }
@@ -42,6 +45,8 @@ const muiFormatColorPalette = (mode: string) => {
                 },
                 success: {
                     main: colorSwatch.greenAccent,
+                    light: colorSwatch.lightGreen,
+                    dark: colorSwatch.darkGreen,
                 },
                 purpleAccent: {
                     main: colorSwatch.purpleAccent,
@@ -73,6 +78,8 @@ const muiFormatColorPalette = (mode: string) => {
                 },
                 success: {
                     main: colorSwatch.greenAccent,
+                    light: colorSwatch.lightGreen,
+                    dark: colorSwatch.darkGreen,
                 },
                 purpleAccent: {
                     main: colorSwatch.purpleAccent,

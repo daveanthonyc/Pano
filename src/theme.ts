@@ -21,9 +21,11 @@ const colorSwatch = {
     black : "rgb(58,58,58)", // done
     lightGrey : "rgb(229,231,235)", // done
     lighterGrey: "rgb(245,245,245)",
+    darkBorderGrey: 'rgba(0,0,0,0.07)',
+    lightBoderGrey: 'rgba(255,255,255,0.5)',
 }
 
-const muiFormatColorPalette = (mode: string) => {
+export const muiFormatColorPalette = (mode: string) => {
     return  { 
         palette: {
             ...(mode === 'light') ? {
@@ -58,12 +60,17 @@ const muiFormatColorPalette = (mode: string) => {
                 greyAccent: {
                     main: colorSwatch.greyAccent,
                     light: colorSwatch.lighterGrey,
+                },
+                border: {
+                    main: colorSwatch.darkBorderGrey,
+                    light: colorSwatch.lightBoderGrey,
                 }
             } : {
+                // dark theme
                 primary: {
-                    main: colorSwatch.white,
-                    light: colorSwatch.white,
-                    dark: colorSwatch.black,
+                    main: 'rgb(0,0,0)',
+                    light:  'rgb(0,0,0)',
+                    dark: colorSwatch.white,
                 },
                 secondary: {
                     main: colorSwatch.blueAccent,
@@ -85,7 +92,7 @@ const muiFormatColorPalette = (mode: string) => {
                     main: colorSwatch.purpleAccent,
                 },
                 body: {
-                    main: colorSwatch.black,
+                    main: colorSwatch.white,
                     light: colorSwatch.lightGrey,
                 },
                 greyAccent: {

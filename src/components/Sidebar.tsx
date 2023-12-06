@@ -14,9 +14,6 @@ type NavItem = {
     icon: any 
 }
 
-const sideBarWidth = "280px"
-
-
 const navItems = [
     {
         text: "Dashboard",
@@ -51,7 +48,7 @@ function Sidebar() {
     }, [open])
 
   return (
-    <Box width={widthThing} gap='13px' sx={{display: 'flex',flexDirection: 'column', justifyContent: 'space-between'}} borderRight='0.5px solid rgba(0,0,0,0.07)' height='100vh'>
+    <Box width={widthThing} gap='13px' sx={{display: 'flex',flexDirection: 'column', justifyContent: 'space-between'}} borderRight='0.5px border.main' height='100vh'>
       <Box padding='15px' sx={{display: 'flex', gap: '15px', flexDirection: 'column', justifyContent: open ? 'center' : 'auto'}}>
         <Box display='flex' flexDirection={open ? 'row' : 'column'} alignItems='center' gap='10px' justifyContent='space-between'>
             <ListItemButton sx={{gap: "10px", backgroundColor: "greyAccent.light", borderRadius: "10px", padding: '5px', display: open ? 'flex' : 'grid'}}>

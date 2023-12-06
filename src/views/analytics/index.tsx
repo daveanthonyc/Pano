@@ -6,7 +6,7 @@ function Analytics() {
     <Box width='100%'>
         <Topbar title='Analytics'/>
         <Box padding='25px'>
-            <Typography fontWeight='600' fontSize='26px'>Analytics</Typography>
+            <Typography fontWeight='600' fontSize='26px' color='primary.dark'>Analytics</Typography>
         </Box>
     </Box>
   )

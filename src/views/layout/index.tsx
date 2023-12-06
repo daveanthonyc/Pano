@@ -1,11 +1,13 @@
 import { Outlet } from "react-router-dom"
 import Sidebar from "../../components/Sidebar"
 import { Box } from '@mui/material'
+import { ReactNode } from "react"
 
-function Layout() {
+function Layout({ children } : { children: ReactNode}) {
   return (
-    <Box>
-        <Sidebar></Sidebar>
+    <Box display={'flex'}>
+        <Sidebar />
+        {children}
         <Outlet />
     </Box>
   )

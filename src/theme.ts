@@ -17,6 +17,7 @@ const colorSwatch = {
     // Text
     black : "rgb(23,23,23)", // done
     lightGrey : "rgb(229,231,235)", // done
+    lighterGrey: "rgb(245,245,245)",
 }
 
 const muiFormatColorPalette = (mode: string) => {
@@ -51,6 +52,7 @@ const muiFormatColorPalette = (mode: string) => {
                 },
                 greyAccent: {
                     main: colorSwatch.greyAccent,
+                    light: colorSwatch.lighterGrey,
                 }
             } : {
                 primary: {

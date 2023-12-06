@@ -1,11 +1,11 @@
 import { Avatar, Box, Button, IconButton, List, ListItem, ListItemButton, Typography } from '@mui/material'
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import GridViewIcon from '@mui/icons-material/GridView';
 import CreateOutlined from '@mui/icons-material/CreateOutlined';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 
 type NavItem = {
     text: string,
@@ -17,31 +17,31 @@ const sideBarWidth = "280px"
 const navItems = [
     {
         text: "Dashboard",
-        icon: <GridViewIcon />,
+        icon: <GridViewIcon sx={{height: '20px'}}/>,
     },
     {
         text: "Analytics",
-        icon: <AssessmentIcon />,
+        icon: <BarChartRoundedIcon sx={{height: '20px'}} />,
     },
     {
         text: "Projects",
-        icon: <WorkOutlineIcon />,
+        icon: <WorkOutlineIcon sx={{height: '20px'}} />,
     },
     {
         text: "All Issues",
-        icon: <TaskAltIcon />,
+        icon: <TaskAltIcon sx={{height: '20px'}} />,
     },
 ]
 
 function Sidebar() {
-    const [active, setActive] = useState<string>('');
+    const [active, setActive] = useState<string>('dashboard');
     const navigate = useNavigate();
   return (
-    <Box width={sideBarWidth} padding='15px' gap='13px' display='grid'>
+    <Box width={sideBarWidth} padding='15px' gap='13px' sx={{display: 'flex',flexDirection: 'column'}} borderRight='0.5px solid rgba(0,0,0,0.07)' height='100vh'>
         <Box display='flex' alignItems='center' gap='10px'>
-            <ListItemButton sx={{gap: "10px", backgroundColor: "secondary.light", borderRadius: "10px", padding: '5px'}}>
+            <ListItemButton sx={{gap: "10px", backgroundColor: "greyAccent.light", borderRadius: "10px", padding: '5px'}}>
                 <Avatar sx={{backgroundColor: 'secondary.dark', height: '25px', width: '25px', fontSize: '15px'}} variant='rounded'>T</Avatar>
-                <Typography sx={{color: 'primary.dark'}} fontWeight='500'>test</Typography>
+                <Typography sx={{color: 'primary.dark'}} fontWeight='500' fontSize='14px'>test</Typography>
             </ListItemButton> 
             <Button sx={{justifyContent: 'right'}}>
                 <Avatar sx={{backgroundColor: 'secondary.dark', height: '25px', width: '25px', fontSize: '15px'}} variant='rounded'>D</Avatar>
@@ -64,14 +64,15 @@ function Sidebar() {
                     }} >
                     <ListItemButton sx={{
                         padding: 0, 
-                        ":hover": {backgroundColor: 'secondary.light'}, 
+                        ":hover": {backgroundColor: 'greyAccent.light'}, 
                         borderRadius: '5px',
                     }} 
                         onClick={() => {setActive(lcText); navigate(lcText);}}>
                         <IconButton color={
                             active === lcText ?
                                 'secondary' : 'body'
-                        } >
+                            } 
+                            size='medium'>
                         {item.icon}
                         </IconButton>
                         <Typography color='body' fontSize='14px' fontWeight='400'>{item.text}</Typography>

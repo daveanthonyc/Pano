@@ -48,7 +48,7 @@ function Sidebar() {
     }, [open])
 
   return (
-    <Box width={widthThing} gap='13px' sx={{display: 'flex',flexDirection: 'column', justifyContent: 'space-between'}} borderRight='0.5px border.main' height='100vh'>
+    <Box width={widthThing} gap='13px' sx={{display: 'flex',flexDirection: 'column', justifyContent: 'space-between'}} borderRight='0.5px solid' borderColor='border.main' height='100vh'>
       <Box padding='15px' sx={{display: 'flex', gap: '15px', flexDirection: 'column', justifyContent: open ? 'center' : 'auto'}}>
         <Box display='flex' flexDirection={open ? 'row' : 'column'} alignItems='center' gap='10px' justifyContent='space-between'>
             <ListItemButton sx={{gap: "10px", backgroundColor: "greyAccent.light", borderRadius: "10px", padding: '5px', display: open ? 'flex' : 'grid'}}>
@@ -68,7 +68,8 @@ function Sidebar() {
         <Button sx={{
             width: '100%',
             color: 'primary.dark', 
-            outline: '0.5px solid rgba(0,0,0,0.1)', 
+            outline: '0.5px solid', 
+            outlineColor: 'border.main',
             boxShadow: '0 1px 3px 0 rgba(0,0,0,0.15)', 
             textTransform: 'none', 
             paddingBlock: '3px'
@@ -90,7 +91,7 @@ function Sidebar() {
                             'secondary.main' : 'body.main',
                     backgroundColor:
                         active === lcText ?
-                            'secondary.light' : 'white',
+                            'secondary.light' : 'backgound.main',
                     }} >
                     <ListItemButton sx={{
                         padding: 0, 
@@ -123,7 +124,7 @@ function Sidebar() {
         </List>
 
       </Box>
-        <Box height='30px' borderTop='0.5px solid rgba(0,0,0,0.1)' sx={{height: '50px', display: 'flex', alignItems: 'center', paddingInline: '15px'}} display='flex' justifyContent='space-between'>
+        <Box height='30px' borderTop='0.5px solid' borderColor='border.main' sx={{height: '50px', display: 'flex', alignItems: 'center', paddingInline: '15px'}} display='flex' justifyContent='space-between'>
             { open &&
                 <Box bgcolor='success.light' paddingInline='1.6rem' paddingBlock='4px' borderRadius='5px'>
                     <Typography color='success.dark' fontSize='14px'>Free Plan</Typography>

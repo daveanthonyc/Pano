@@ -7,7 +7,7 @@ function Topbar({ title } : { title: string }) {
     const theme = useSelector((state: any) => state.theme);
 
   return (
-    <Box height='60px' borderBottom='1px solid rgba(0,0,0,0.1)' display='flex' alignItems='center' justifyContent='space-between' paddingInline='30px'>
+    <Box height='60px' borderBottom='1px solid' borderColor='border.main' display='flex' alignItems='center' justifyContent='space-between' paddingInline='30px'>
         <Box>
             <Typography variant='h6' component='h1' color='primary.dark'>{title}</Typography>
         </Box>

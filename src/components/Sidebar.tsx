@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from 'react';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import WestIcon from '@mui/icons-material/West';
 import AddIcon from '@mui/icons-material/Add';
+import { useTheme } from '@emotion/react';
 
 type NavItem = {
     text: string,
@@ -34,6 +35,7 @@ const navItems = [
 ]
 
 function Sidebar() {
+    const theme = useTheme();
     const location = useLocation();
     const currentPath = location.pathname.replace('/', '')
     const [open, setOpen] = useState<boolean>(true);
@@ -51,11 +53,11 @@ function Sidebar() {
   return (
     <Box width={widthThing} gap='13px' sx={{display: 'flex',flexDirection: 'column', justifyContent: 'space-between'}} borderRight='0.5px solid' borderColor='border.main' height='100vh'>
       <Box padding='15px' sx={{display: 'flex', gap: '15px', flexDirection: 'column', justifyContent: open ? 'center' : 'auto'}}>
-        <Box display='flex' flexDirection={open ? 'row' : 'column'} alignItems='center' gap='10px' justifyContent='space-between'>
-            <ListItemButton sx={{gap: "10px", backgroundColor: "greyAccent.light", borderRadius: "10px", padding: '5px', display: open ? 'flex' : 'grid'}}>
+        <Box display='flex' alignItems='center' gap='10px'>
+            <ListItemButton sx={{display: 'flex', justifyContent:open ? 'left' : 'center', gap: "10px", backgroundColor: "greyAccent.light", borderRadius: "10px", padding: '5px'}}>
                 <Avatar sx={{backgroundColor: 'secondary.dark', height: '25px', width: '25px', fontSize: '15px'}} variant='rounded'>T</Avatar>
-                <Typography sx={{color: 'primary.dark'}} fontWeight='500' fontSize='14px'>
-                    {open && 'test'}
+                <Typography sx={{color: 'primary.dark'}} fontWeight='500' fontSize='14px' display={open ? 'block' : 'none'}>
+                    test
                 </Typography>
             </ListItemButton> 
             {
@@ -65,20 +67,11 @@ function Sidebar() {
                 </Button>
             }
         </Box>
-        <Box display='flex' justifyContent='center' >
-        <Button sx={{
-            width: '100%',
-            color: 'primary.dark', 
-            outline: '0.5px solid', 
-            outlineColor: 'border.main',
-            boxShadow: '0 1px 3px 0 rgba(0,0,0,0.15)', 
-            textTransform: 'none', 
-            paddingBlock: '3px'
-            }} 
-            >
-                <CreateOutlined sx={{marginInline: '10px'}}/>
-                {open && 'New Issue'}
-        </Button>
+        <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
+        <button style={{display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center', backgroundColor: theme.palette.background.main, border: `0.5px solid ${theme.palette.border.main}`, borderRadius: '5px', paddingBlock: '5px', cursor: 'pointer', boxShadow: '0 2px 2px 0 rgba(0,0,0,0.1)'}}>
+            <CreateOutlined sx={{marginInline: '10px'}}/>
+            {open && 'New Issue'}
+        </button>
         </Box>
         <List sx={{display: 'grid', gap: '3px', padding: 0}}>
         {

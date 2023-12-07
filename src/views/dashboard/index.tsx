@@ -11,7 +11,7 @@ function Dashboard() {
         <Box padding='25px'>
             <Typography fontWeight='600' fontSize='26px' color='primary.dark'>Welcome, David Chiang</Typography>
             <Typography color='primary.dark'>
-                {isLoading ? <CircularProgress color="primary"/> : data.fact}
+                {isLoading ? <CircularProgress sx={{color: 'greyAccent.main'}} /> : data.fact}
             </Typography>
         </Box>
     </Box>

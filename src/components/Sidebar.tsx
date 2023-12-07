@@ -3,8 +3,8 @@ import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import GridViewIcon from '@mui/icons-material/GridView';
 import CreateOutlined from '@mui/icons-material/CreateOutlined';
-import { useNavigate } from 'react-router-dom';
-import { useMemo, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import WestIcon from '@mui/icons-material/West';
 import AddIcon from '@mui/icons-material/Add';
@@ -34,8 +34,10 @@ const navItems = [
 ]
 
 function Sidebar() {
+    const location = useLocation();
+    const currentPath = location.pathname.replace('/', '')
     const [open, setOpen] = useState<boolean>(true);
-    const [active, setActive] = useState<string>('dashboard');
+    const [active, setActive] = useState<string>(currentPath);
     const navigate = useNavigate();
 
     const toggleMenu = (): void => {
@@ -84,6 +86,7 @@ function Sidebar() {
                 const lcText = item.text.toLowerCase().split(' ').join('-');
                 return (
                 <ListItem key={item.text} sx={{
+                    borderRadius: '5px',
                     padding: 0,
                     color: 
                         active === lcText ?
@@ -94,8 +97,9 @@ function Sidebar() {
                     }} >
                     <ListItemButton sx={{
                         padding: 0, 
-                        ":hover": {backgroundColor: 'greyAccent.light'}, 
-                        borderRadius: '5px',
+                        ":hover": {backgroundColor: 'greyAccent.light',
+                        borderRadius: '5px'
+                        }, 
                         display: 'flex',
                         justifyContent: !open && 'center'
                     }} 

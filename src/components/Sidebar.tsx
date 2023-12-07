@@ -68,9 +68,21 @@ function Sidebar() {
             }
         </Box>
         <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
-        <button style={{display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center', backgroundColor: theme.palette.background.main, border: `0.5px solid ${theme.palette.border.main}`, borderRadius: '5px', paddingBlock: '5px', cursor: 'pointer', boxShadow: '0 2px 2px 0 rgba(0,0,0,0.1)'}}>
-            <CreateOutlined sx={{marginInline: '10px'}}/>
-            {open && 'New Issue'}
+        <button style={{
+            display: 'flex', 
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: theme.palette.background.main,
+            border: `0.5px solid ${theme.palette.border.main}`, 
+            borderRadius: '5px',
+            paddingBlock: '5px', 
+            cursor: 'pointer', 
+            boxShadow: '0 2px 2px 0 rgba(0,0,0,0.1)', 
+            color: theme.palette.body.main
+            }}>
+                <CreateOutlined sx={{marginInline: '10px'}}/>
+                {open && 'New Issue'}
         </button>
         </Box>
         <List sx={{display: 'grid', gap: '3px', padding: 0}}>

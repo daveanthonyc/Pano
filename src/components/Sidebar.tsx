@@ -4,7 +4,7 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import GridViewIcon from '@mui/icons-material/GridView';
 import CreateOutlined from '@mui/icons-material/CreateOutlined';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import WestIcon from '@mui/icons-material/West';
 import AddIcon from '@mui/icons-material/Add';

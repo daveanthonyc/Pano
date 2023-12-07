@@ -18,7 +18,6 @@ const colorSwatch = {
     purpleAccent: "rgb(214,135,255)", // done
 
     // Text
-    //black : "rgb(23,23,23)", // done
     black : "rgb(58,58,58)", // done
     lightGrey : "rgb(229,231,235)", // done
     lighterGrey: "rgb(245,245,245)",

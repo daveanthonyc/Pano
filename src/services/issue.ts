@@ -7,9 +7,22 @@ export const issueApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL}),
     endpoints: (builder) => ({
         getAllIssues: builder.query({
-            query: () => "fact/",
+            query: () => "/",
+        }),
+        getUserById: builder.query({
+            query: (id) => `/general/user/${id}`
+        }),
+        createUser: builder.mutation({
+            query: (newUser) => ({
+                url: '/general/user',
+                method: 'POST',
+                body: newUser,
+            })
         })
     })
 })
 
-export const { useGetAllIssuesQuery } = issueApi;
+export const { 
+    useGetAllIssuesQuery,
+    useGetUserByIdQuery,
+} = issueApi;

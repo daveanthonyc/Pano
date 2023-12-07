@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from '../state/themeSlice';
+import logo from '../assets/logo.png'
 
 function Topbar({ title } : { title: string }) {
     const dispatch = useDispatch();
@@ -11,8 +12,9 @@ function Topbar({ title } : { title: string }) {
         <Box>
             <Typography variant='h6' component='h1' color='primary.dark'>{title}</Typography>
         </Box>
-        <Box>
+        <Box display='flex' alignItems='center'>
             <Button variant='contained' onClick={() => {dispatch(toggleTheme())}}>{theme}</Button>
+            <img src={logo} alt="logo" style={{height: '40px', filter: 'invert(22%) sepia(10%) saturate(1372%) hue-rotate(178deg) brightness(93%) contrast(86%)'}}/>
         </Box>
     </Box>
   )

@@ -5,16 +5,17 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import Analytics from './views/analytics';
 import Projects from './views/projects';
 import AllIssues from './views/allissues';
-import { Provider, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import { createTheme } from '@mui/material';
 import { muiFormatColorPalette } from './theme';
 
 function App() {
-    const theme = useSelector((state: any) => state.theme);
+    const theme = useSelector((state: any) => state.theme.theme);
     const muiTheme = useMemo(() => {
-        return createTheme(muiFormatColorPalette(theme)
-    )}, [theme])
+        return createTheme(muiFormatColorPalette(theme));
+    }, [theme])
+
   return (
     <ThemeProvider theme={muiTheme}>
         <BrowserRouter>

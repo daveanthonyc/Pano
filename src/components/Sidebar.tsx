@@ -40,7 +40,6 @@ function Sidebar() {
 
     const toggleMenu = (): void => {
         setOpen(!open);
-        console.log(open);
     }
 
     const widthThing = useMemo(() => {

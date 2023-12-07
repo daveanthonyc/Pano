@@ -4,7 +4,7 @@ import { toggleTheme } from '../state/themeSlice';
 
 function Topbar({ title } : { title: string }) {
     const dispatch = useDispatch();
-    const theme = useSelector((state: any) => state.theme);
+    const theme = useSelector((state: any) => state.theme.theme);
 
   return (
     <Box height='60px' borderBottom='1px solid' borderColor='border.main' display='flex' alignItems='center' justifyContent='space-between' paddingInline='30px'>

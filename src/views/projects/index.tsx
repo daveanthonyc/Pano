@@ -6,7 +6,7 @@ function Projects() {
     <Box width='100%'>
         <Topbar title='Projects'/>
         <Box padding='25px'>
-            <Typography fontWeight='600' fontSize='26px'>Projects</Typography>
+            <Typography fontWeight='600' fontSize='26px' color='primary.dark'>Projects</Typography>
         </Box>
     </Box>
   )

@@ -5,6 +5,7 @@ const colorSwatch = {
     white: "rgb(255,255,255)", // done
     blueAccent: "rgb(63,118,255)", // done
     blueLight: "rgba(63,118,255,0.1)", // done
+    lighterBlueLight: "rgba(63,118,255,0.2)", // done
     darkBlue : "rgb(55,65,81)", // done
 
     // Accent Colors
@@ -21,9 +22,12 @@ const colorSwatch = {
     black : "rgb(58,58,58)", // done
     lightGrey : "rgb(229,231,235)", // done
     lighterGrey: "rgb(245,245,245)",
+    lighterOpaqueGrey: "rgb(30,30,30)",
+    darkBorderGrey: 'rgba(0,0,0,0.07)',
+    lightBoderGrey: 'rgba(255,255,255,0.17)',
 }
 
-const muiFormatColorPalette = (mode: string) => {
+export const muiFormatColorPalette = (mode: string) => {
     return  { 
         palette: {
             ...(mode === 'light') ? {
@@ -58,16 +62,24 @@ const muiFormatColorPalette = (mode: string) => {
                 greyAccent: {
                     main: colorSwatch.greyAccent,
                     light: colorSwatch.lighterGrey,
+                },
+                border: {
+                    main: colorSwatch.darkBorderGrey,
+                    light: colorSwatch.lightBoderGrey,
+                },
+                background: {
+                    main: colorSwatch.white
                 }
             } : {
+                // dark theme
                 primary: {
-                    main: colorSwatch.white,
-                    light: colorSwatch.white,
-                    dark: colorSwatch.black,
+                    main: 'rgb(0,0,0)',
+                    light:  'rgb(0,0,0)',
+                    dark: colorSwatch.white,
                 },
                 secondary: {
                     main: colorSwatch.blueAccent,
-                    light: colorSwatch.blueLight,
+                    light: colorSwatch.lighterBlueLight,
                     dark: colorSwatch.darkBlue,
                 },
                 warning: {
@@ -85,11 +97,19 @@ const muiFormatColorPalette = (mode: string) => {
                     main: colorSwatch.purpleAccent,
                 },
                 body: {
-                    main: colorSwatch.black,
+                    main: colorSwatch.white,
                     light: colorSwatch.lightGrey,
                 },
                 greyAccent: {
-                    main: colorSwatch.greyAccent,
+                    light: colorSwatch.lighterOpaqueGrey,
+                    main: colorSwatch.lighterGrey,
+                },
+                border: {
+                    main: colorSwatch.lightBoderGrey,
+                    light: colorSwatch.darkBorderGrey,
+                },
+                background: {
+                    main: 'rgb(0,0,0)'
                 }
             }
         },

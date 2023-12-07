@@ -6,7 +6,7 @@ function Dashboard() {
     <Box width='100%'>
         <Topbar title='Dashboard'/>
         <Box padding='25px'>
-            <Typography fontWeight='600' fontSize='26px'>Welcome, David Chiang</Typography>
+            <Typography fontWeight='600' fontSize='26px' color='primary.dark'>Welcome, David Chiang</Typography>
         </Box>
     </Box>
   )

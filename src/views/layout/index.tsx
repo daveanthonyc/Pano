@@ -5,7 +5,7 @@ import { ReactNode } from "react"
 
 function Layout({ children } : { children: ReactNode}) {
   return (
-    <Box display={'flex'}>
+    <Box display={'flex'} bgcolor='primary.light'>
         <Sidebar />
         {children}
         <Outlet />

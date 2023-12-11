@@ -9,8 +9,28 @@ export const issueApi = createApi({
         getAllIssues: builder.query({
             query: () => "/",
         }),
-        getUserById: builder.query({
-            query: (id) => `/general/user/${id}`
+        getAllProjects: builder.query({
+            query: () => "/project",
+        }),
+        getProjectsByIds: builder.query({
+            query: (projectIds) => ({
+                url: `/project/projects`,
+                method: 'POST',
+                body: {ids: projectIds},
+            }),
+        }),
+        getUserByEmailPassword: builder.query({
+            query: (targetUser) => ({
+                url: `/general/user`,
+                method: 'GET',
+                body: targetUser,
+            })
+        }),
+        getUserByName: builder.query({
+            query: (targetName) => ({
+                url: `/general/user/${targetName}`,
+                method: 'GET',
+            })
         }),
         createUser: builder.mutation({
             query: (newUser) => ({
@@ -18,11 +38,22 @@ export const issueApi = createApi({
                 method: 'POST',
                 body: newUser,
             })
-        })
+        }),
+        createProject: builder.mutation({
+            query: (newProject) => ({
+                url: '/project',
+                method: 'POST',
+                body: newProject,
+            })
+        }),
     })
 })
 
 export const { 
     useGetAllIssuesQuery,
-    useGetUserByIdQuery,
+    useGetUserByEmailPasswordQuery,
+    useGetAllProjectsQuery,
+    useCreateProjectMutation,
+    useGetUserByNameQuery,
+    useGetProjectsByIdsQuery
 } = issueApi;

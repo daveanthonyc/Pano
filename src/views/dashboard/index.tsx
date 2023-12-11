@@ -1,18 +1,21 @@
-import { Typography, Box, CircularProgress } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import Topbar from "../../components/Topbar";
-import { useGetUserByIdQuery } from "../../services/issue";
+import timeOfDayGreeting from "src/utils/timeOfDayGreeting"
+import { useSelector } from "react-redux";
+import User from "src/types/User";
 
 function Dashboard() {
-    const userId = '6571e9dfaacc14d194017add'
-    const { data, isLoading } = useGetUserByIdQuery(userId);
+    const user: User = useSelector((state) => state.user.user);
 
   return (
     <Box width='100%'>
         <Topbar title='Dashboard'/>
         <Box padding='25px'>
-            <Typography fontWeight='600' fontSize='26px' color='primary.dark'>Welcome, {!isLoading && `${data.firstName} ${data.lastName}`}</Typography>
+            <Typography fontWeight='600' fontSize='26px' color='primary.dark'>
+                {timeOfDayGreeting() + user.displayName}
+            </Typography>
             <Typography color='primary.dark'>
-                {isLoading ? <CircularProgress sx={{color: 'greyAccent.main'}} /> : data.message}
+                {user.role}
             </Typography>
         </Box>
     </Box>

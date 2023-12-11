@@ -1,0 +1,25 @@
+.decorative-div {
+    width: 50px;
+    background-color: red;
+    height: 100vh;
+    position: absolute;
+    z-index: 100;
+}
+
+.image-position {
+    position: relative;
+    width: 50px;
+    right: -104px;
+    margin-block: 10px;
+}
+
+@media(max-width: 600px) {
+    .decorative-div {
+        display: none;
+    }
+}
+
+.image-logo {
+    width: 100px;
+    margin-bottom: -20px;
+}

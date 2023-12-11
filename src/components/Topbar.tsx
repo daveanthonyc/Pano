@@ -13,7 +13,6 @@ function Topbar({ title } : { title: string }) {
             <Typography variant='h6' component='h1' color='primary.dark'>{title}</Typography>
         </Box>
         <Box display='flex' alignItems='center'>
-            <Button variant='contained' onClick={() => {dispatch(toggleTheme())}}>{theme}</Button>
             <img src={logo} alt="logo" style={{height: '40px', filter: 'invert(22%) sepia(10%) saturate(1372%) hue-rotate(178deg) brightness(93%) contrast(86%)'}}/>
         </Box>
     </Box>

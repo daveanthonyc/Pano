@@ -1,14 +1,20 @@
-import { Avatar, Box, Button, IconButton, List, ListItem, ListItemButton, Typography } from '@mui/material'
+import { Avatar, Box, Button, IconButton, List, ListItem, ListItemButton, Menu, MenuItem, Switch, Typography } from '@mui/material'
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import GridViewIcon from '@mui/icons-material/GridView';
 import CreateOutlined from '@mui/icons-material/CreateOutlined';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useMemo, useState } from 'react';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import WestIcon from '@mui/icons-material/West';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@emotion/react';
+import CreateProject from './CreateProject';
+import { useDispatch, useSelector } from 'react-redux';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { setUser } from 'src/state/userSlice';
+import { toggleTheme } from 'src/state/themeSlice';
+import { useGetUserByNameQuery, useGetProjectsByIdsQuery } from 'src/services/issue';
 
 type NavItem = {
     text: string,
@@ -41,6 +47,47 @@ function Sidebar() {
     const [open, setOpen] = useState<boolean>(true);
     const [active, setActive] = useState<string>(currentPath);
     const navigate = useNavigate();
+    const params = useParams();
+    const themeState = useSelector((state) => state.theme.theme);
+    const themeBool = useMemo(() => {
+        return (themeState === 'light') ? false : true;
+    }, [themeState]);
+
+    const { data: userData, isLoading: userLoading, refetch: refetchUsers } = useGetUserByNameQuery(params.id);
+    const { data: projects, isLoading: projectsLoading, refetch } = useGetProjectsByIdsQuery(
+        userData?.user.projects,
+        {
+            skip: userLoading
+        }
+    )
+        
+    useEffect(() => {
+        if (userData && projectsLoading) {
+            refetch();
+        }
+    }, [userData, projectsLoading])
+
+    const [ anchorEl, setAnchorEl ] = useState<null | HTMLElement>(null);
+    const [ profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
+    const [ openProjectModal, setOpenProjectModal] = useState<boolean>(false);
+    const dispatch = useDispatch();
+
+
+    const signOut = () => {
+        navigate('/login');
+        dispatch(setUser({}));
+    }
+
+    const toggleProfileMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+        setProfileMenuOpen(!profileMenuOpen);
+        setAnchorEl(e.currentTarget);
+    }
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    }
+
+    const profileOpen = Boolean(anchorEl);
 
     const toggleMenu = (): void => {
         setOpen(!open);
@@ -62,8 +109,24 @@ function Sidebar() {
             </ListItemButton> 
             {
                     open &&
-                <Button>
-                    <Avatar sx={{backgroundColor: 'secondary.dark', height: '25px', width: '25px', fontSize: '15px'}} variant='rounded'>D</Avatar>
+                <Button sx={{display: 'flex', justifyContent: 'right', padding: '0px'}}>
+                    <Avatar sx={{backgroundColor: 'secondary.dark', height: '28px', width: '28px', fontSize: '15px'}} 
+                        variant='rounded'
+                        onClick={toggleProfileMenu}
+                        >
+                        {!userLoading && userData.user.displayName[0]}
+                    </Avatar>
+                    <Menu id='profile-menu' open={profileOpen} anchorEl={anchorEl} onClose={handleClose} sx={{backgroundColor: 'success'}}>
+                        <Typography paddingInline='10px' fontWeight='300' fontSize='12px'>{!userLoading && userData.user.email}</Typography>
+                        <MenuItem sx={{display: 'flex', justifyContent: 'space-between'}}>
+                            <Typography fontWeight='300' fontSize='13px' marginLeft='5px'>Light/Dark Mode</Typography>
+                            <Switch color='success' checked={themeBool} onChange={() => dispatch(toggleTheme())}></Switch>
+                        </MenuItem>
+                        <MenuItem onClick={signOut}>
+                            <LogoutIcon fontSize='10px' />
+                            <Typography fontWeight='300' fontSize='13px' marginLeft='5px'>Sign out</Typography>
+                        </MenuItem>
+                    </Menu>
                 </Button>
             }
         </Box>
@@ -71,17 +134,19 @@ function Sidebar() {
         <button style={{
             display: 'flex', 
             width: '100%',
-            justifyContent: 'center',
+            justifyContent: 'left',
             alignItems: 'center',
             backgroundColor: theme.palette.background.main,
             border: `0.5px solid ${theme.palette.border.main}`, 
             borderRadius: '5px',
+            paddingInline: '0px', 
             paddingBlock: '5px', 
             cursor: 'pointer', 
             boxShadow: '0 2px 2px 0 rgba(0,0,0,0.1)', 
-            color: theme.palette.body.main
+            color: theme.palette.body.main,
+            fontWeight: '600'
             }}>
-                <CreateOutlined sx={{marginInline: '10px'}}/>
+                <CreateOutlined sx={{marginInline: '8px'}}/>
                 {open && 'New Issue'}
         </button>
         </Box>
@@ -108,9 +173,9 @@ function Sidebar() {
                         display: 'flex',
                         justifyContent: !open && 'center'
                     }} 
-                        onClick={() => {setActive(lcText); navigate(lcText);}}>
+                        onClick={() => {setActive(lcText); navigate(`${params.id}/${lcText}`);}}>
                         <IconButton color={
-                            active === lcText ?
+                            (active === lcText) ?
                                 'secondary' : 'body'
                             } 
                             size='medium'>
@@ -122,14 +187,24 @@ function Sidebar() {
             )})
         }
         {open &&
-            <Box marginTop='40px' sx={{display: 'flex', justifyContent: 'space-between'}}>
-                <Typography color='grey' fontWeight='600' fontSize='12px' >Projects</Typography>
-                <IconButton >
-                   <AddIcon sx={{height: '14px', width: '12px'}} /> 
+            <>
+            <Box marginTop='40px' sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                <Typography color='grey' fontWeight='600' fontSize='12px'>Projects</Typography>
+                <IconButton onClick={() => setOpenProjectModal(true)}>
+                   <AddIcon sx={{height: '14px', width: '12px', color: 'primary.dark'}}/> 
                 </IconButton>
             </Box>
+            {
+                (projects != undefined) && projects.map((project) => (
+                    <Typography key={project._id}>{project.projectTitle}</Typography>
+                ))
+            }
+            </>
         }
         </List>
+        {
+            (projects != undefined) && <CreateProject open={openProjectModal} setOpen={setOpenProjectModal} refetch={refetchUsers}/> 
+        }
 
       </Box>
         <Box height='30px' borderTop='0.5px solid' borderColor='border.main' sx={{height: '50px', display: 'flex', alignItems: 'center', paddingInline: '15px'}} display='flex' justifyContent='space-between'>
@@ -148,4 +223,4 @@ function Sidebar() {
   )
 }
 
-export default Sidebar
+export default Sidebar;

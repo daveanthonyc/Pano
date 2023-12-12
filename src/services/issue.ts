@@ -46,6 +46,26 @@ export const issueApi = createApi({
                 body: newProject,
             })
         }),
+        createIssue: builder.mutation({
+            query: (newIssue) => ({
+                url: '/issue/create',
+                method: 'POST',
+                body: {
+                    title: "New Issue",
+                    projectTitle: "test",
+                    state: "Backlog",
+                    priorityLevel: "high",
+                    startDate: "2023-12-11T02:49:36.510+00:00",
+                    dueDate: "2023-12-11T02:49:36.510+00:00",
+                    userId: "6571e41942604646e4ab720a",
+                    project: "657676b9ed333328f1bea5b8",
+                    description: "test",
+                    users: [],
+                    issues: [],
+                    creationDate: "2023-12-10T23:41:22.459+00:00"
+                },
+            })
+        }),
     })
 })
 
@@ -55,5 +75,6 @@ export const {
     useGetAllProjectsQuery,
     useCreateProjectMutation,
     useGetUserByNameQuery,
-    useGetProjectsByIdsQuery
+    useGetProjectsByIdsQuery,
+    useCreateUserMutation
 } = issueApi;

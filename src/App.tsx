@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
@@ -16,7 +16,6 @@ function App() {
     const muiTheme = useMemo(() => {
         return createTheme(muiFormatColorPalette(theme));
     }, [theme])
-    const params = useParams();
 
   return (
     <ThemeProvider theme={muiTheme}>

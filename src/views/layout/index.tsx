@@ -16,10 +16,10 @@ function Layout({ children } : { children?: ReactNode}) {
         if (!isLoading) {
             dispatch(setUser(data.user))
         }
-    }, [data])
+    }, [data, isLoading, dispatch])
 
   return (
-    <Box display={'flex'} bgcolor='primary.light'>
+    <Box display={'flex'} bgcolor='primary.light' height={'100%'}>
         <Sidebar />
         {children}
         <Outlet />

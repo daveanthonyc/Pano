@@ -1,9 +1,9 @@
-import { Box, Dialog, TextField, Typography, Button, FormControl, InputLabel, Select, MenuItem, Paper, InputBase } from '@mui/material'
+import { Box, Dialog, TextField, Typography, Button, FormControl, InputLabel, Select, MenuItem, Paper, InputBase, DialogContent } from '@mui/material'
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import CustomMenu from './CustomMenu';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-import CircleOutlined from '@mui/icons-material/CircleOutlined';
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 
 function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) => void}) {
     const projects = useSelector((state) => state.project.project);
@@ -18,6 +18,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
     const [issueTitle, setIssueTitle] = useState<string>("");
     const [identifer, setIdentifier] = useState<string>("");
     const [description, setDescription] = useState<string>("");
+    const [project, setProject] = useState<string>("");
 
     const handleChange = (e) => {
         setSelectedOption(e.target.value);
@@ -44,18 +45,15 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
         closeDialog();
     }
 
-  return (
-    <Dialog open={open} onClose={closeDialog}
-        sx={{overflow: 'visible'}}
-    >
-    <Paper sx={{backgroundColor: 'primary.main', 
-        color: 'primary.dark', 
-        border: '1px solid', 
-        borderColor: 'primary.dark',
-        overflow: 'visible'
-        }}>
 
-        <Box sx={{ padding: '15px', display: 'grid', gap: '1rem'}}>
+    const menuclickHandler = (e) => {
+        setProject(e.target.innerText);
+    }
+
+  return (
+    <Dialog open={open} onClose={closeDialog} sx={{}}>
+        <DialogContent sx={{overflow: 'hidden', width: '600px'}}>
+        <Box sx={{ display: 'grid', gap: '1rem'}}>
 
         {/* 1st ROW */}
 
@@ -66,27 +64,21 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                     fontWeight='600'>
                     Create Issue
                 </Typography>
-                <FormControl> 
-                    <Select
-                        id='dropdown'
-                        value={selectedOption}
-                        onChange={handleChange}
-                        inputProps={{ IconComponent: () => null}}
-                        size='small'
-                        sx={{color: 'primary.dark'}}
-                    >
+                <CustomMenu title={project} startAdornment={<AssignmentOutlinedIcon sx={{fontSize: '12px'}} />}>
+        
                     {
                         Array.isArray(projects) && projects.length > 0 && (
-                        projects.map((project, index: number) => (
-                            <MenuItem value={index} key={project._id}>
-                                <Typography fontSize='12px' sx={{color: 'primary.dark'}}>
-                                    {project.projectTitle}
-                                </Typography>
-                            </MenuItem>
+                        projects.map((project, index) => (
+                            <span onClick={menuclickHandler} key={index} style={{ 
+                                width: '100%', 
+                                height: '100%', 
+                                paddingBlock: '5px'
+                            }}>
+                                {project.projectTitle}
+                            </span>
                         )))
                     }
-                    </Select>
-                </FormControl>
+                </CustomMenu>
             </Box>
 
         {/* 2nd ROW */}
@@ -144,7 +136,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                         >Add Issue</Button>
                 </Box>
             </Box>
-    </Paper>
+        </DialogContent>
     </Dialog>
   )
 }

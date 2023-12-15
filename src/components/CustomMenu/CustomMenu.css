@@ -1,5 +1,6 @@
 .custom-menu-button {
     background-color: rgba(0,0,0,0);
+    z-index: 50;
     font-size: 11px;
     border: 1px solid rgba(0,0,0,0.2);
     border-radius: 5px;
@@ -8,8 +9,8 @@
     align-items: center;
     gap: 5px;
     cursor: pointer;
-    position: relative;
     transition: background-color 300ms ease-in-out;
+    position: relative;
 }
 
 .custom-menu-button:hover {
@@ -24,8 +25,11 @@
     border: 1px solid rgba(0,0,0,0.15);
     padding: 5px;
     display: grid;
-    gap: 3px;
     animation: fadeIn 140ms ease-out;
+    z-index: 100;
+    top: 25px;
+    left: 0px;
+    width: 150px;
 }
 
 @keyframes fadeIn {
@@ -41,7 +45,6 @@
 }
 
 .open-menu > * {
-    padding-block: 4px;
     padding-inline: 3px;
     cursor: pointer;
     display: flex;

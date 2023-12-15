@@ -1,6 +1,5 @@
 import CustomMenu from "src/components/CustomMenu"
 import { useState } from 'react';
-import { Box, Button, Typography } from "@mui/material";
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 
 function Test() {

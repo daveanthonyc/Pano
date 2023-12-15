@@ -1,15 +1,16 @@
 import { ReactHTMLElement, ReactNode, useEffect, useRef, useState } from 'react';
 import { Typography } from '@mui/material';
-import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import './CustomMenu.css';
 
-function CustomMenu({title, icon, children} : {title: string, icon?: any | undefined, isOpen: boolean, children?: ReactNode}) {
+function CustomMenu({title, icon, children, startAdornment} : {title: string, icon?: any | undefined, isOpen: boolean, children?: ReactNode, startAdornment: any}) {
     const [open, setOpen] = useState<boolean>(false);
     const menuButtonRef = useRef(null);
     const menuMenuRef = useRef(null);
 
     const toggleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
         setOpen(!open);
+        console.log(e.currentTarget.getBoundingClientRect().top)
+        console.log(e.currentTarget.getBoundingClientRect().left)
     }
 
     useEffect(() => {
@@ -28,13 +29,17 @@ function CustomMenu({title, icon, children} : {title: string, icon?: any | undef
   return (
     <>
     <button className='custom-menu-button' onClick={(e) => toggleOpen(e)} ref={menuButtonRef}>
-        <AssignmentOutlinedIcon sx={{fontSize: '10px'}} />
+        {startAdornment}
         {icon}
         <Typography sx={{fontSize: '11px', color: 'primary.dark'}}>{title}</Typography>
-    </button>
         {
             open && 
-            <div className='open-menu' ref={menuMenuRef}>
+            <div className='open-menu' ref={menuMenuRef}
+                style={{
+                    top: '500',
+                    left: '515',
+                }}
+            >
                 {children.map((child, index: number) => (
                     <Typography sx={{fontSize: '11px', color: 'primary.dark'}} key={index}>
                         {child}
@@ -42,6 +47,7 @@ function CustomMenu({title, icon, children} : {title: string, icon?: any | undef
                 ))}
             </div>
         }
+    </button>
     </>
   )
 }

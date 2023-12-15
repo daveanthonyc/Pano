@@ -1,20 +1,66 @@
 .custom-menu-button {
-    background-color: 0;
+    background-color: rgba(0,0,0,0);
     font-size: 11px;
-    border: 0.5px solid rgba(0,0,0,0.2);
-    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 5px;
     padding-block: 5px;
     display: flex;
     align-items: center;
     gap: 5px;
     cursor: pointer;
     position: relative;
+    transition: background-color 300ms ease-in-out;
+}
+
+.custom-menu-button:hover {
+    background-color: rgba(0,0,0,0.04);
 }
 
 .open-menu {
+    margin-top: 5px;
     position: absolute;
-    background-color: rgb(249,249,249);
-    border-radius: 14px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    padding: 15px;
+    background-color: rgb(253,253,253);
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 5px;
+    display: grid;
+    gap: 3px;
+    animation: fadeIn 140ms ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.open-menu > * {
+    padding-block: 4px;
+    padding-inline: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.open-menu > * > * {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    height: 15px;
+}
+
+
+.open-menu > *:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.open-menu.loaded {
+    opacity: 1;
 }

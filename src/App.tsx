@@ -10,6 +10,7 @@ import Projects from './views/projects';
 import AllIssues from './views/allissues';
 import Login from './views/login';
 import SignIn from './views/signin';
+import Test from './views/Test';
 
 function App() {
     const theme = useSelector((state: any) => state.theme.theme);
@@ -21,6 +22,7 @@ function App() {
     <ThemeProvider theme={muiTheme}>
         <BrowserRouter>
             <Routes>
+                <Route path='/test' element={<Test />} />
                 <Route path='/' element={<Navigate to='/login' replace/>} />
                 <Route path='/login' element={<Login />}/>
                 <Route path='/sign-in' element={<SignIn />}/>

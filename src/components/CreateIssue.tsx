@@ -7,7 +7,6 @@ import CircleOutlined from '@mui/icons-material/CircleOutlined';
 
 function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) => void}) {
     const projects = useSelector((state) => state.project.project);
-    console.log(projects)
     const user  = useSelector((state) => state.user.user);
     const { _id } = user;
     const closeDialog = () => {
@@ -68,15 +67,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                     Create Issue
                 </Typography>
                 <FormControl> 
-                    <InputLabel id="dropdown-label" 
-                        variant='outlined'
-                        sx={{
-                        backgroundColor: 'none',
-                        fontSize: '12px',
-                        }}>
-                    </InputLabel>
                     <Select
-                        labelId='dropdown-label'
                         id='dropdown'
                         value={selectedOption}
                         onChange={handleChange}

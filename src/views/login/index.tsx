@@ -5,7 +5,6 @@ import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'src/state/userSlice';
 import { useNavigate } from 'react-router-dom';
-import background from '../../assets/background.jpg'
 
 function Login() {
     const [email, setEmail] = useState<string>('demoUser@gmail.com');
@@ -56,7 +55,7 @@ function Login() {
                 <TextField type='email' placeholder='Enter your email address...' sx={{borderWidth: '10px'}} variant='outlined' onChange={changeEmail} defaultValue='demoUser@gmail.com' label='Email'></TextField>
                 <TextField type='password' placeholder='Enter your password' sx={{paddingBlock: '-10px'}} variant='outlined' onChange={changePassword} defaultValue='password' label='Password'></TextField>
                 <Button variant='contained' 
-                    sx={{color: 'primary.main', 
+                    sx={{
                     backgroundColor: 'secondary.main', 
                     textTransform: 'none', 
                     height: '50px',

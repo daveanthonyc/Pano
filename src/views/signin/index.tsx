@@ -15,7 +15,7 @@ function SignIn() {
                 <TextField type='email' placeholder='Enter your email address...' sx={{borderWidth: '10px'}} variant='outlined'  label='Email'></TextField>
                 <TextField type='password' placeholder='Enter your password' sx={{paddingBlock: '-10px'}} variant='outlined'  label='Password'></TextField>
                 <Button variant='contained' 
-                    sx={{color: 'primary.main', 
+                    sx={{
                     backgroundColor: 'secondary.main', 
                     textTransform: 'none', 
                     height: '50px', 

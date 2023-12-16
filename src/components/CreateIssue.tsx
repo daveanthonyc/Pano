@@ -4,6 +4,12 @@ import { useSelector } from 'react-redux';
 import CustomMenu from './CustomMenu';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import CustomMenuItem from './CustomMenuItem';
+import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
+import BlurCircularOutlinedIcon from '@mui/icons-material/BlurCircularOutlined';
+import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 
 function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) => void}) {
     const projects = useSelector((state) => state.project.project);
@@ -19,6 +25,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
     const [identifer, setIdentifier] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [project, setProject] = useState<string>("");
+    const [state, setState] = useState<string>("Backlog");
 
     const handleChange = (e) => {
         setSelectedOption(e.target.value);
@@ -43,6 +50,10 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
         }
         const res = await fetch(`${import.meta.env.VITE_REACT_BASE_URL}/project`, reqOptions);
         closeDialog();
+    }
+
+    const handleStateChange = (e) => {
+        setState(e.target.innerText);
     }
 
 
@@ -102,12 +113,13 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
             autoComplete='off' />
 
         {/* 4th ROW */}
-            <Box display='flex' justifyContent='space-between' gap='10px'>
-                <CustomMenu title='Cool Button' icon={<CircleOutlinedIcon fontSize='8px'/>}>
-                    <p>this is the children</p>
-                    <p>this is the children</p>
-                    <p>this is the children</p>
-                    <p>this is the children</p>
+            <Box display='flex' gap='10px'>
+                <CustomMenu title={state}>
+                    <CustomMenuItem onClick={handleStateChange}>{<PendingOutlinedIcon fontSize='10px'/>}Backlog</CustomMenuItem>
+                    <CustomMenuItem onClick={handleStateChange}>{<RadioButtonUncheckedIcon fontSize='10px' />}Todo</CustomMenuItem>
+                    <CustomMenuItem onClick={handleStateChange}>{<BlurCircularOutlinedIcon fontSize='10px' sx={{color: 'warning.main'}}/>}In Progress</CustomMenuItem>
+                    <CustomMenuItem onClick={handleStateChange}>{<TaskAltOutlinedIcon fontSize='10px' sx={{color: 'success.main'}}/>}Done</CustomMenuItem>
+                    <CustomMenuItem onClick={handleStateChange}>{<CancelOutlinedIcon fontSize='10px' sx={{color: 'rgb(255,90,90)'}}/>}Cancelled</CustomMenuItem>
                 </CustomMenu>
             </Box>
         </Box>

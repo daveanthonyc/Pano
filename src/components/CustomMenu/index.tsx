@@ -2,7 +2,7 @@ import { ReactHTMLElement, ReactNode, useEffect, useRef, useState } from 'react'
 import { Typography } from '@mui/material';
 import './CustomMenu.css';
 
-function CustomMenu({title, icon, children, startAdornment} : {title: string, icon?: any | undefined, isOpen: boolean, children?: ReactNode, startAdornment: any}) {
+function CustomMenu({title, icon, children, startAdornment, defaultVal} : {title: string, icon?: any | undefined, isOpen: boolean, children?: ReactNode, startAdornment: any, defaultVal?: string}) {
     const [open, setOpen] = useState<boolean>(false);
     const menuButtonRef = useRef(null);
     const menuMenuRef = useRef(null);

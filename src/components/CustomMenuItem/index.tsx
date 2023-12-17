@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 
-function CustomMenuItem({ children, onClick } : { children: ReactNode, onClick: () => void }) {
+function CustomMenuItem({ children, onClick, icon } : { children: ReactNode, onClick: () => void, icon?: ReactNode }) {
   return (
     <span style={{ 
         width: '100%', 
@@ -9,6 +9,7 @@ function CustomMenuItem({ children, onClick } : { children: ReactNode, onClick: 
     }}
     onClick={onClick}
     >
+        { icon }
         { children }
     </span>
   )

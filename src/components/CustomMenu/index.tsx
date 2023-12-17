@@ -2,23 +2,25 @@ import { ReactHTMLElement, ReactNode, useEffect, useRef, useState } from 'react'
 import { Typography } from '@mui/material';
 import './CustomMenu.css';
 
-function CustomMenu({title, icon, children, startAdornment, defaultVal} : {title: string, icon?: any | undefined, isOpen: boolean, children?: ReactNode, startAdornment: any, defaultVal?: string}) {
+function CustomMenu({title, icon, startAdornment, children} : {title: string, icon?: any | undefined, isOpen: boolean, startAdornment: any, children?: ReactNode}) {
     const [open, setOpen] = useState<boolean>(false);
     const menuButtonRef = useRef(null);
     const menuMenuRef = useRef(null);
 
     const toggleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
         setOpen(!open);
-        console.log(e.currentTarget.getBoundingClientRect().top)
-        console.log(e.currentTarget.getBoundingClientRect().left)
+    }
+
+    const handleClickOutside = (e) => {
+        if (menuButtonRef.current != null) {
+            if (!menuButtonRef.current.contains(e.target)) {
+                setOpen(false);
+                document.removeEventListener('click', handleClickOutside);
+            }
+        }
     }
 
     useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (!menuButtonRef.current.contains(e.target)) {
-                setOpen(false);
-            }
-        }
         addEventListener('click', handleClickOutside);
 
         return () => {
@@ -27,11 +29,12 @@ function CustomMenu({title, icon, children, startAdornment, defaultVal} : {title
     }, []);
 
   return (
-    <>
     <button className='custom-menu-button' onClick={(e) => toggleOpen(e)} ref={menuButtonRef}>
         {startAdornment}
         {icon}
         <Typography sx={{fontSize: '11px', color: 'primary.dark'}}>{title}</Typography>
+
+        {/* ABSOLUTELY POSITIONED MENU INSIDE BUTTON */}
         {
             open && 
             <div className='open-menu' ref={menuMenuRef}
@@ -48,7 +51,6 @@ function CustomMenu({title, icon, children, startAdornment, defaultVal} : {title
             </div>
         }
     </button>
-    </>
   )
 }
 

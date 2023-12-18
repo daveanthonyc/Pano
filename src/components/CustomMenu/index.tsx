@@ -1,8 +1,9 @@
-import { ReactHTMLElement, ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { Typography } from '@mui/material';
 import './CustomMenu.css';
 
-function CustomMenu({title, icon, startAdornment, children} : {title: string, icon?: any | undefined, isOpen: boolean, startAdornment: any, children?: ReactNode}) {
+function CustomMenu({title, icon, startAdornment, children} : {title: string, icon?: any | undefined, isOpen: boolean, startAdornment?: any, children?: ReactNode}) {
+    const isSingleComponent = Array.isArray(children);
     const [open, setOpen] = useState<boolean>(false);
     const menuButtonRef = useRef(null);
     const menuMenuRef = useRef(null);
@@ -43,11 +44,15 @@ function CustomMenu({title, icon, startAdornment, children} : {title: string, ic
                     left: '515',
                 }}
             >
-                {children.map((child, index: number) => (
+                {isSingleComponent ? children.map((child, index: number) => (
                     <Typography sx={{fontSize: '11px', color: 'primary.dark'}} key={index}>
                         {child}
                     </Typography>
-                ))}
+                )) :
+                    <Typography sx={{fontSize: '11px', color: 'primary.dark'}}>
+                        {children}
+                    </Typography>
+                }
             </div>
         }
     </button>

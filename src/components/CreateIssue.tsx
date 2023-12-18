@@ -16,6 +16,7 @@ import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
 import BlockIcon from '@mui/icons-material/Block';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import getAiResponse from 'src/services/ai';
+import CustomDateMenu from './CustomDateMenu';
 
 function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) => void}) {
     const projects = useSelector((state) => state.project.project);
@@ -244,6 +245,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                         <CustomMenuItem onClick={(e) => handleProjectChange(e, priority.icon)} key={priority.text}>{priority.icon}{priority.text}</CustomMenuItem>
                     ))}
                 </CustomMenu>
+
             </Box>
         </Box>
 

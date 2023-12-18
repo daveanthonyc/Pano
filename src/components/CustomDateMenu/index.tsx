@@ -1,48 +1,5 @@
-import { Box, Typography } from '@mui/material';
-import { useRef, useState, useEffect } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import CustomDatePicker from 'src/components/CustomDatePicker';
-
-function Test() {
-    const handleChange = (e) => {
-        setChosenDate(e.$d);
-        const date: Date = e.$d;
-        const dateString = date.toDateString().split(' ').slice(1).join(' ');
-        setChosenDate(dateString);
-        setIsOpen(false);
-    }
-
-    const [chosenDate, setChosenDate] = useState<string>("Start Date");
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-
-    const handleMenuToggle = () => {
-        setIsOpen(true);
-    }
-
-    // create ref
-    const menuRef = useRef(null);
-
-
-    const handleClickOutside = (e) => {
-        if (menuRef.current != null) {
-            if (!menuRef.current.contains(e.target)) {
-                setIsOpen(false);
-                document.removeEventListener('click', handleClickOutside);
-            }
-        }
-    }
-
-    useEffect(() => {
-        addEventListener('click', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('click', handleClickOutside)
-        };
-    }, []);
-
+function CustomDateMenu() {
   return (
-    <Box>
         <button onClick={handleMenuToggle} style={{ 
             position: 'relative', 
             borderRadius: '5px',
@@ -56,6 +13,7 @@ function Test() {
                 {(chosenDate === 'Select Start Date') && <CalendarMonthIcon fontSize='12px'/>}
                 {chosenDate} 
                 {(chosenDate != 'Select Start Date') && 
+
                 <button style={{ 
                     border: 'none', 
                     backgroundColor: 'none',
@@ -77,8 +35,7 @@ function Test() {
                 <CustomDatePicker handleChange={handleChange}/>
             }
         </button>
-    </Box>
   )
 }
 
-export default Test
+export default CustomDateMenu

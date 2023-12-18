@@ -18,6 +18,7 @@ import { toggleTheme } from 'src/state/themeSlice';
 import { useGetUserByNameQuery, useGetProjectsByIdsQuery } from 'src/services/issue';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { setProject } from 'src/state/projectSlice';
+import LoadingScreen from './LoadingScreen';
 
 type NavItem = {
     text: string,
@@ -340,6 +341,9 @@ function Sidebar() {
                 }}/>
             </IconButton>
         </Box>
+        {
+            projectsLoading && <LoadingScreen />
+        }
     </Box>
   )
 }

@@ -6,10 +6,8 @@ import ProjectCard from "src/components/ProjectCard";
 
 function Projects() {
     const projects = useSelector((state) => state.project.project);
-    console.log(projects);
 
     useEffect(() => {
-        console.log(projects)
     }, [projects])
 
   return (

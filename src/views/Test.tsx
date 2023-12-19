@@ -72,6 +72,7 @@ function Test() {
                 </button> 
                 }
             </Typography>
+
             {
                 isOpen && 
                 <CustomDatePicker handleChange={handleChange}/>
@@ -81,4 +82,4 @@ function Test() {
   )
 }
 
-export default Test
+export default Test;

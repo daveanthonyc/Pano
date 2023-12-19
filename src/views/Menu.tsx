@@ -4,19 +4,47 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CustomDatePicker from "src/components/CustomDatePicker";
 
 function Menu() {
-    const [date, setDate] = useState<string>("Start date");
-    const [open, setOpen] = useState<boolean>(false);
+    const [chosenStartDate, setChosenStartDate] = useState<string>("Start Date");
 
     const handleChange = (e) => {
-        setOpen(true);
+        const date: Date = e.$d;
+        const dateString = date.toDateString().split(' ').slice(1).join(' ');
+        setChosenStartDate(dateString);
+        setStartOpen(false);
     }
 
+    const resetStartDate = () => {
+        setChosenStartDate('Start Date');
+    }
+
+    const [startOpen, setStartOpen] = useState<boolean>(false);
+
+    // =========
+
+    const [chosenDueDate, setChosenDueDate] = useState<string>("Due Date");
+
+    const handleDueChange = (e) => {
+        const date: Date = e.$d;
+        const dateString = date.toDateString().split(' ').slice(1).join(' ');
+        setChosenDueDate(dateString);
+        setDueOpen(false);
+    }
+
+    const resetDueDate = () => {
+        setChosenDueDate('Due Date');
+    }
+
+    const [dueOpen, setDueOpen] = useState<boolean>(false);
+
   return (
-    <div>
-        <CustomDateMenu icon={<CalendarMonthIcon />} title={date} open={open} clickHandler={handleChange}>
-            <CustomDatePicker handleChange={handleChange}/>
-        </CustomDateMenu>
-    </div>
+  <div>
+    <CustomDateMenu onClick={() => setStartOpen(true)} onClose={() => setStartOpen(false)} open={startOpen} title={chosenStartDate} reset={resetStartDate} defaultText='Start Date'>
+        <CustomDatePicker handleChange={handleChange} />
+    </CustomDateMenu>
+    <CustomDateMenu onClick={() => setDueOpen(true)} onClose={() => setDueOpen(false)} open={dueOpen} title={chosenDueDate} reset={resetDueDate} defaultText='Due Date'>
+        <CustomDatePicker handleChange={handleDueChange} />
+    </CustomDateMenu>
+  </div>
   )
 }
 

@@ -17,6 +17,7 @@ import BlockIcon from '@mui/icons-material/Block';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import getAiResponse from 'src/services/ai';
 import CustomDateMenu from './CustomDateMenu';
+import CustomDatePicker from "src/components/CustomDatePicker";
 
 function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) => void}) {
     const projects = useSelector((state) => state.project.project);
@@ -104,7 +105,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
     const [priority, setPriority] = useState('None');
     const [priorityIcon, setPriorityIcon] = useState(<BlockIcon fontSize='10px'/>);
 
-    const createProject = async () => {
+    const createIssue = async () => {
         const date = new Date();
         const reqOptions = {
             method: 'POST',
@@ -112,16 +113,18 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                userId: _id, 
-                projectTitle: issueTitle,
-                identifer: identifer,
+                title: issueTitle, 
                 description: description,
-                users: [_id],
-                issues: [],
+                state: state,
+                priorityLevel: priority,
+                startDate: payloadStartDate,
+                dueDate: payloadDueDate, 
+                user: _id,
+                //project: ,// ?????
                 creationDate: date
             })
         }
-        await fetch(`${import.meta.env.VITE_REACT_BASE_URL}/project`, reqOptions);
+        await fetch(`${import.meta.env.VITE_REACT_BASE_URL}/issue/create`, reqOptions);
         closeDialog();
     }
 
@@ -138,14 +141,53 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
             setPriorityIcon(icon);
         }
     }
-
+    const [projectId, setProjectId] = useState<string | undefined>();
     const menuclickHandler = (e) => {
+        setProjectId()
         setProject(e.target.innerText);
     }
 
+    const [chosenStartDate, setChosenStartDate] = useState<string>("Start Date");
+    const [payloadStartDate, setPayloadStartDate] = useState<Date | undefined>();
+    const [payloadDueDate, setPayloadDueDate] = useState<Date | undefined>();
+
+    const handleChange = (e) => {
+        const date: Date = e.$d;
+        setPayloadStartDate(date);
+        const dateString = date.toDateString().split(' ').slice(1).join(' ');
+        setChosenStartDate(dateString);
+        setStartOpen(false);
+    }
+
+    const resetStartDate = () => {
+        setChosenStartDate('Start Date');
+    }
+
+    const [startOpen, setStartOpen] = useState<boolean>(false);
+
+    const [chosenDueDate, setChosenDueDate] = useState<string>("Due Date");
+
+    const handleDueChange = (e) => {
+        const date: Date = e.$d;
+        setPayloadDueDate(date);
+        const dateString = date.toDateString().split(' ').slice(1).join(' ');
+        setChosenDueDate(dateString);
+        setDueOpen(false);
+    }
+
+    const resetDueDate = () => {
+        setChosenDueDate('Due Date');
+    }
+
+    const [dueOpen, setDueOpen] = useState<boolean>(false);
+
   return (
-    <Dialog open={open} onClose={closeDialog} sx={{}}>
-        <DialogContent sx={{overflow: 'hidden', width: '600px'}}>
+    <Dialog open={open} onClose={closeDialog} sx={{
+        '& .MuiPaper-elevation': {
+            overflow: 'visible'
+        },
+    }}>
+        <DialogContent sx={{overflow: 'visible', width: '600px'}}>
         <Box sx={{ display: 'grid', gap: '1rem'}}>
 
         {/* 1st ROW */}
@@ -177,6 +219,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
             <TextField variant='outlined' 
             onChange={(e) => setIssueTitle(e.target.value)} 
             label='Title' 
+            required={true}
             aria-autocomplete='none' 
             autoComplete='off'
             size='small'
@@ -188,7 +231,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                     Ai
                 </Button>
             </Box>
-            <Dialog open={aiMenuOpen} onClose={handleAiMenuClose}>
+            <Dialog open={aiMenuOpen} onClose={handleAiMenuClose} sx={{overflow: 'visible'}}>
                 <Box padding={'15px'} display='flex' flexDirection='column' gap='15px' width={'500px'}>
                     <TextField placeholder='Ask Ai anything...' size='small' onChange={handleAiTextFieldChange} label='Ai Prompt'/>
                     <Box display='flex' justifyContent='right'>
@@ -245,7 +288,12 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                         <CustomMenuItem onClick={(e) => handleProjectChange(e, priority.icon)} key={priority.text}>{priority.icon}{priority.text}</CustomMenuItem>
                     ))}
                 </CustomMenu>
-
+                <CustomDateMenu onClick={() => setStartOpen(true)} onClose={() => setStartOpen(false)} open={startOpen} title={chosenStartDate} reset={resetStartDate} defaultText='Start Date'>
+                    <CustomDatePicker handleChange={handleChange} />
+                </CustomDateMenu>
+                <CustomDateMenu onClick={() => setDueOpen(true)} onClose={() => setDueOpen(false)} open={dueOpen} title={chosenDueDate} reset={resetDueDate} defaultText='Due Date'>
+                    <CustomDatePicker handleChange={handleDueChange} />
+                </CustomDateMenu>
             </Box>
         </Box>
 
@@ -269,7 +317,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                         backgroundColor: 'secondary.main', 
                         '&:hover': {backgroundColor: 'secondary.main'}}}
                         size='small'
-                        onClick={createProject}
+                        onClick={createIssue}
                         >Add Issue</Button>
                 </Box>
             </Box>

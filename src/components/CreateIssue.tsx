@@ -120,7 +120,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                 startDate: payloadStartDate,
                 dueDate: payloadDueDate, 
                 user: _id,
-                //project: ,// ?????
+                project: projectId,
                 creationDate: date
             })
         }
@@ -142,8 +142,9 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
         }
     }
     const [projectId, setProjectId] = useState<string | undefined>();
-    const menuclickHandler = (e) => {
-        setProjectId()
+    const menuclickHandler = (e, id: string) => {
+        setProjectId(id);
+        console.log(projectId);
         setProject(e.target.innerText);
     }
 
@@ -181,14 +182,15 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
 
     const [dueOpen, setDueOpen] = useState<boolean>(false);
 
+
+
   return (
     <Dialog open={open} onClose={closeDialog} sx={{
         '& .MuiPaper-elevation': {
-            overflow: 'visible'
+            overflow: 'visible',
         },
     }}>
-        <DialogContent sx={{overflow: 'visible', width: '600px'}}>
-        <Box sx={{ display: 'grid', gap: '1rem'}}>
+        <Box sx={{ display: 'grid', gap: '1rem', padding: '15px', width: '600px'}}>
 
         {/* 1st ROW */}
 
@@ -203,7 +205,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                     {
                         Array.isArray(projects) && projects.length > 0 && (
                         projects.map((project, index) => (
-                            <span onClick={menuclickHandler} key={index} style={{ 
+                            <span onClick={(e) => menuclickHandler(e, project._id)} key={index} style={{ 
                                 width: '100%', 
                                 height: '100%', 
                                 paddingBlock: '5px'
@@ -321,7 +323,6 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
                         >Add Issue</Button>
                 </Box>
             </Box>
-        </DialogContent>
     </Dialog>
   )
 }

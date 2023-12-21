@@ -22,7 +22,7 @@ const colorSwatch = {
     lightGrey : "rgb(229,231,235)", // done
     lighterGrey: "rgb(245,245,245)",
     lighterOpaqueGrey: "rgb(30,30,30)",
-    darkBorderGrey: 'rgba(0,0,0,0.07)',
+    darkBorderGrey: 'rgba(0,0,0,0.1)',
     lightBoderGrey: 'rgba(255,255,255,0.17)',
 }
 

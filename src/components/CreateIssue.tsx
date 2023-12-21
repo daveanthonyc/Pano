@@ -144,7 +144,6 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
     const [projectId, setProjectId] = useState<string | undefined>();
     const menuclickHandler = (e, id: string) => {
         setProjectId(id);
-        console.log(projectId);
         setProject(e.target.innerText);
     }
 

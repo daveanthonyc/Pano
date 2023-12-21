@@ -7,19 +7,16 @@ import ProjectCard from "src/components/ProjectCard";
 function Projects() {
     const projects = useSelector((state) => state.project.project);
 
-    useEffect(() => {
-    }, [projects])
-
   return (
     <Box width='100%' >
         <Topbar title='Projects'/>
         <Box padding='25px' sx={{
             display: 'grid',
-            gap: '15px',
+            gap: '25px',
             gridTemplateColumns: 'repeat(3,1fr)'
         }}>
             {(Array.isArray(projects)) && projects.map((project, index) => (
-                <ProjectCard title={project.projectTitle} description={project.description} id={project._id}/>
+                <ProjectCard title={project.projectTitle} description={project.description} id={project._id} key={index}/>
             ))}
         </Box>
     </Box>

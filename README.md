@@ -5,7 +5,9 @@ An application used to manage tasks in in different projects, built with React, 
 This project is currently in development. Users are able to Sign in to the demo account and create new projects and new issues. The dark mode is also usable as well and the app displays information mostly pulled from a database.
 
 ## Project Screen Shot(s)
-<img src="./assets/signin.png" width="300">
+![Sign In Page](https://ibb.co/CwxC8tL) 
+![Main Dashboard](https://ibb.co/3fks3bk) 
+![Create an Issue with Ai](https://ibb.co/n6zTxbP) 
 
 ## Installation and Setup Instructions
 Clone this repository. You will need `node` and `npm` installed globally on your machine.  

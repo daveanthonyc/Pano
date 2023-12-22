@@ -6,8 +6,14 @@ export const issueApi = createApi({
     reducerPath: 'issueApi',
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL}),
     endpoints: (builder) => ({
-        getAllIssues: builder.query({
-            query: () => "/",
+        getAllIssuesByUserId: builder.query({
+            query: (userId) => ({
+                url: `/issue/find`,
+                method: 'POST',
+                body: {
+                    id: userId
+                }
+            }),
         }),
         getAllProjects: builder.query({
             query: () => "/project",
@@ -70,11 +76,11 @@ export const issueApi = createApi({
 })
 
 export const { 
-    useGetAllIssuesQuery,
     useGetUserByEmailPasswordQuery,
     useGetAllProjectsQuery,
     useCreateProjectMutation,
     useGetUserByNameQuery,
     useGetProjectsByIdsQuery,
-    useCreateUserMutation
+    useCreateUserMutation,
+    useGetAllIssuesByUserIdQuery
 } = issueApi;

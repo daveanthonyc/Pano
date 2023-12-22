@@ -125,7 +125,7 @@ function Sidebar() {
                 backgroundColor: 'red',
                 display: 'none'
             },
-            overflowX: 'hidden',
+            overflowY: 'scroll'
         }} 
         borderRight='0.5px solid' 
         borderColor='border.main' 

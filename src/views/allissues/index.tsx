@@ -3,9 +3,18 @@ import Topbar from "../../components/Topbar";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useGetAllIssuesByUserIdQuery } from "src/services/issue";
 import Issue from "src/types/Issue";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function AllIssues() {
-    const { data, isLoading } = useGetAllIssuesByUserIdQuery();
+    const user = useSelector((state) => state.user.user);
+    const { data, isLoading, refetch } = useGetAllIssuesByUserIdQuery(user._id);
+
+    useEffect(() => {
+        if (!user && isLoading) {
+            refetch();
+        }
+    }, [user]);
 
 
     if (isLoading) {

@@ -63,19 +63,19 @@ function Dashboard() {
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr'}}> 
                     <Box padding='15px' borderBottom='1px solid' borderRight='1px solid' borderColor='border.main'>
                         <Typography fontSize='12px' sx={{ color: 'primary.dark'}}>Issues assigned to you</Typography>
-                        <Typography fontWeight='600' fontSize='20px'>{issuesAssigned}</Typography>
+                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>{issuesAssigned}</Typography>
                     </Box>
                     <Box padding='15px' borderBottom='1px solid' borderRight='1px solid' borderColor='border.main'>
                         <Typography fontSize='12px' sx={{ color: 'primary.dark'}}>Pending Issues</Typography>
-                        <Typography fontWeight='600' fontSize='20px'>{pendingIssues}</Typography>
+                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>{pendingIssues}</Typography>
                     </Box>
                     <Box padding='15px' borderRight='1px solid' borderColor='border.main'>
                         <Typography fontSize='12px' sx={{ color: 'primary.dark'}}>Completed Issues</Typography>
-                        <Typography fontWeight='600' fontSize='20px'>{completedIssues}</Typography>
+                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>{completedIssues}</Typography>
                     </Box>
                     <Box padding='15px' borderRight='1px solid' borderColor='border.main'>
                         <Typography fontSize='12px' sx={{ color: 'primary.dark'}}>Issues due by this week</Typography>
-                        <Typography fontWeight='600' fontSize='20px'>{issuesDueThisWeek}</Typography>
+                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>{issuesDueThisWeek}</Typography>
                     </Box>
                 </Box>
                 <Box sx={{ width: '800px', height: '300px' }}>
@@ -104,7 +104,7 @@ function Dashboard() {
                                     }
                                 }
                         }}
-                        sx={{ border: 'none' }}
+                        sx={{ border: 'none', color: 'primary.dark' }}
                         pageSizeOptions={[5]}
                         />
                         </Box>
@@ -121,7 +121,7 @@ function Dashboard() {
                                     }
                                 }
                         }}
-                        sx={{ border: 'none' }}
+                        sx={{ border: 'none', color: 'primary.dark' }}
                         pageSizeOptions={[5]}
                         />
                         </Box>

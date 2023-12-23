@@ -57,10 +57,11 @@ function Sidebar() {
         return (themeState === 'light') ? false : true;
     }, [themeState]);
 
-    const { data: userData, 
+    const { 
+        data: userData, 
         isLoading: userLoading, 
         refetch: refetchUsers 
-        } = useGetUserByNameQuery(params.id);
+    } = useGetUserByNameQuery(params.id);
 
     const { data: projects,
         isLoading: projectsLoading, 
@@ -125,7 +126,6 @@ function Sidebar() {
                 backgroundColor: 'red',
                 display: 'none'
             },
-            overflowY: 'scroll'
         }} 
         borderRight='0.5px solid' 
         borderColor='border.main' 

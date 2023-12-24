@@ -37,7 +37,6 @@ function AllIssues() {
             dueDate: issue.dueDate
         }
     })
-    console.log(rows)
 
     // access issues
     const columns: GridColDef[] = [
@@ -89,7 +88,7 @@ function AllIssues() {
             <DataGrid rows={rows} columns={columns} initialState={{
                 pagination: {
                     paginationModel: {
-                        pageSize: 5,
+                        pageSize: 10,
                     }
                 }
                 }}

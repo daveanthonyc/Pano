@@ -8,15 +8,14 @@ import StyledBox from "src/components/StyledBox";
 import MainCalendar from "../../components/ResponsiveCalendar";
 import IssueStateGraph from "src/components/IssueStateGraph";
 import { useGetAllIssuesByUserIdQuery } from "src/services/issue";
+import Issue from "src/types/Issue";
 
 function Dashboard() {
     const date = new Date();
     const user: User = useSelector((state) => state.user.user);
-    const { data, isLoading } = useGetAllIssuesByUserIdQuery();
+    const { data, isLoading } = useGetAllIssuesByUserIdQuery(user._id);
 
     // get Issues
-    console.log(user);
-    const issuesAssigned = 4;
     const pendingIssues = 5;
     const completedIssues = 7;
     const issuesDueThisWeek = 3;
@@ -63,19 +62,37 @@ function Dashboard() {
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr'}}> 
                     <Box padding='15px' borderBottom='1px solid' borderRight='1px solid' borderColor='border.main'>
                         <Typography fontSize='12px' sx={{ color: 'primary.dark'}}>Issues assigned to you</Typography>
-                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>{issuesAssigned}</Typography>
+                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>
+                            {!isLoading && data.message.length}
+                        </Typography>
                     </Box>
                     <Box padding='15px' borderBottom='1px solid' borderRight='1px solid' borderColor='border.main'>
                         <Typography fontSize='12px' sx={{ color: 'primary.dark'}}>Pending Issues</Typography>
-                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>{pendingIssues}</Typography>
+                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>
+                            {!isLoading && data.message.filter((issue: Issue) => {
+                                if (issue.startDate) {
+                                    const issueDate = new Date(issue.startDate)
+                                    return issueDate < date
+                                }
+                            }).length}
+                        </Typography>
                     </Box>
                     <Box padding='15px' borderRight='1px solid' borderColor='border.main'>
                         <Typography fontSize='12px' sx={{ color: 'primary.dark'}}>Completed Issues</Typography>
-                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>{completedIssues}</Typography>
+                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>
+                            {!isLoading && data.message.filter((issue: Issue) => {
+                                return issue.state === 'Done'
+                            }).length}
+                        </Typography>
                     </Box>
                     <Box padding='15px' borderRight='1px solid' borderColor='border.main'>
                         <Typography fontSize='12px' sx={{ color: 'primary.dark'}}>Issues due by this week</Typography>
-                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>{issuesDueThisWeek}</Typography>
+                        <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>
+                            {
+                                3
+                                // placeholder
+                            }
+                        </Typography>
                     </Box>
                 </Box>
                 <Box sx={{ width: '800px', height: '300px' }}>

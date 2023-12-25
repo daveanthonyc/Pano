@@ -3,6 +3,7 @@ import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import Topbar from "../../components/Topbar";
 import timeOfDayGreeting from "src/utils/timeOfDayGreeting"
 import { useSelector } from "react-redux";
+import { useEffect } from 'react';
 import User from "src/types/User";
 import StyledBox from "src/components/StyledBox";
 import MainCalendar from "../../components/ResponsiveCalendar";
@@ -14,6 +15,12 @@ function Dashboard() {
     const date = new Date();
     const user: User = useSelector((state) => state.user.user);
     const { data, isLoading } = useGetAllIssuesByUserIdQuery(user._id);
+
+    useEffect(() => {
+        if (!isLoading) {
+            console.log(data);
+        }
+    }, [data])
 
     // get Issues
     const pendingIssues = 5;
@@ -88,10 +95,14 @@ function Dashboard() {
                     <Box padding='15px' borderRight='1px solid' borderColor='border.main'>
                         <Typography fontSize='12px' sx={{ color: 'primary.dark'}}>Issues due by this week</Typography>
                         <Typography fontWeight='600' sx={{ color: 'primary.dark'}} fontSize='20px'>
-                            {
-                                3
-                                // placeholder
-                            }
+                            {!isLoading && data.message.filter((issue: Issue) => {
+                                if (issue.dueDate) {
+                                    const currentIssueDate = new Date(issue.dueDate)
+                                    const dateDifferenceInMs = date - currentIssueDate;
+                                    const msInAWeek = 604800000
+                                    return dateDifferenceInMs < msInAWeek && dateDifferenceInMs > 0;
+                                }
+                            }).length}
                         </Typography>
                     </Box>
                 </Box>

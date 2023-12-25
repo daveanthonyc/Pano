@@ -10,6 +10,7 @@ function Projects() {
   return (
     <Box width='100%' >
         <Topbar title='Projects'/>
+
         <Box padding='25px' sx={{
             display: 'grid',
             gap: '25px',

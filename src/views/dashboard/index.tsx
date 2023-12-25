@@ -3,7 +3,7 @@ import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import Topbar from "../../components/Topbar";
 import timeOfDayGreeting from "src/utils/timeOfDayGreeting"
 import { useSelector } from "react-redux";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import User from "src/types/User";
 import StyledBox from "src/components/StyledBox";
 import MainCalendar from "../../components/ResponsiveCalendar";
@@ -16,12 +16,6 @@ function Dashboard() {
     const user: User = useSelector((state) => state.user.user);
     const { data, isLoading } = useGetAllIssuesByUserIdQuery(user._id);
 
-    useEffect(() => {
-        if (!isLoading) {
-            console.log(data);
-        }
-    }, [data])
-
     // get Issues
     const pendingIssues = 5;
     const completedIssues = 7;
@@ -31,22 +25,52 @@ function Dashboard() {
         {
             field: 'overdue',
             headerName: 'Overdue',
-            width: 150,
+            width: 80,
             editable: false,
         },
         {
             field: 'id',
             headerName: 'Issue',
-            width: 150,
+            width: 260,
             editable: false,
         },
         {
             field: 'dueDate',
             headerName: 'Due Date',
-            width: 110,
+            width: 200,
             editable: false,
         },
     ]
+
+    const [overdueRows, setOverdueRows] = useState(undefined);
+
+    useEffect(() => {
+        if (data != undefined) {
+            console.log(data);
+            const overdueIssues = data.message.filter((issue: Issue) => {
+                if (issue.dueDate) {
+                    const currDate = new Date(issue.dueDate);
+                    console.log(currDate - date);
+                    const OVERDUE = currDate < date;
+                    console.log(issue.title + " " + OVERDUE);
+                    return OVERDUE
+                }
+            })
+            console.log(overdueIssues)
+
+            const overdueRows = overdueIssues.map((issue: Issue) => {
+                const currentDate = new Date(issue.dueDate);
+                const differenceInMs = currentDate - date;
+                const daysOverdue = -1 * Math.round(differenceInMs / (24*60*60*1000));
+                return ({
+                    overdue: `${daysOverdue} ${daysOverdue <= 1 ? 'day' : 'days'}`,
+                    id: issue.title,
+                    dueDate: currentDate.toDateString()
+                })
+            })
+            setOverdueRows(overdueRows);
+        }
+    }, [data])
 
     const rows = [
         {  overdue: '2 days', id: 'Create Ai functionality', dueDate: 'Dec 21, 2023'},
@@ -125,16 +149,19 @@ function Dashboard() {
                     <Typography fontSize='19px' fontWeight='600' marginBottom='10px'>Overdue Issues</Typography>
                     <StyledBox>
                         <Box width={'100%'} height={300}>
-                        <DataGrid rows={rows} columns={columns} initialState={{
-                            pagination: {
-                                paginationModel: {
-                                    pageSize: 5,
+                        {
+                            (!isLoading && (overdueRows != undefined)) &&
+                            <DataGrid rows={overdueRows} columns={columns} initialState={{
+                                pagination: {
+                                    paginationModel: {
+                                        pageSize: 5,
+                                        }
                                     }
-                                }
-                        }}
-                        sx={{ border: 'none', color: 'primary.dark' }}
-                        pageSizeOptions={[5]}
-                        />
+                            }}
+                            sx={{ border: 'none', color: 'primary.dark' }}
+                            pageSizeOptions={[5]}
+                            />
+                        }
                         </Box>
                     </StyledBox>
                 </Box>
@@ -142,16 +169,18 @@ function Dashboard() {
                     <Typography fontSize='19px' fontWeight='600' marginBottom='10px'>Upcoming Issues</Typography>
                     <StyledBox>
                         <Box width={'100%'} height={300}>
-                        <DataGrid rows={rows} columns={columns} initialState={{
-                            pagination: {
-                                paginationModel: {
-                                    pageSize: 5,
+                        {
+                            <DataGrid rows={rows} columns={columns} initialState={{
+                                pagination: {
+                                    paginationModel: {
+                                        pageSize: 4,
+                                        }
                                     }
-                                }
-                        }}
-                        sx={{ border: 'none', color: 'primary.dark' }}
-                        pageSizeOptions={[5]}
-                        />
+                            }}
+                            sx={{ border: 'none', color: 'primary.dark' }}
+                            pageSizeOptions={[5]}
+                            />
+                        }
                         </Box>
                     </StyledBox>
                 </Box>

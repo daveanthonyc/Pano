@@ -10,53 +10,51 @@ import MainCalendar from "../../components/ResponsiveCalendar";
 import IssueStateGraph from "src/components/IssueStateGraph";
 import { useGetAllIssuesByUserIdQuery } from "src/services/issue";
 import Issue from "src/types/Issue";
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 
 function Dashboard() {
     const date = new Date();
     const user: User = useSelector((state) => state.user.user);
     const { data, isLoading } = useGetAllIssuesByUserIdQuery(user._id);
 
-    // get Issues
-    const pendingIssues = 5;
-    const completedIssues = 7;
-    const issuesDueThisWeek = 3;
-
-    const columns: GridColDef[] = [
-        {
-            field: 'overdue',
-            headerName: 'Overdue',
-            width: 80,
-            editable: false,
-        },
-        {
-            field: 'id',
-            headerName: 'Issue',
-            width: 260,
-            editable: false,
-        },
-        {
-            field: 'dueDate',
-            headerName: 'Due Date',
-            width: 200,
-            editable: false,
-        },
-    ]
+    const columns = (firstHeaderName: string, thirdHeaderName: string) => {
+        return(
+        [
+            {
+                field: 'overdue',
+                headerName: firstHeaderName,
+                width: 100,
+                editable: false,
+            },
+            {
+                field: 'id',
+                headerName: 'Issue',
+                width: 260,
+                editable: false,
+            },
+            {
+                field: 'dueDate',
+                headerName: thirdHeaderName,
+                width: 200,
+                editable: false,
+            },
+        ]
+        )
+    }
 
     const [overdueRows, setOverdueRows] = useState(undefined);
+    const [upcomingRows, setUpcomingRows] = useState(undefined);
 
     useEffect(() => {
         if (data != undefined) {
-            console.log(data);
             const overdueIssues = data.message.filter((issue: Issue) => {
                 if (issue.dueDate) {
                     const currDate = new Date(issue.dueDate);
-                    console.log(currDate - date);
                     const OVERDUE = currDate < date;
-                    console.log(issue.title + " " + OVERDUE);
                     return OVERDUE
                 }
             })
-            console.log(overdueIssues)
 
             const overdueRows = overdueIssues.map((issue: Issue) => {
                 const currentDate = new Date(issue.dueDate);
@@ -69,14 +67,58 @@ function Dashboard() {
                 })
             })
             setOverdueRows(overdueRows);
+
+            const upcomingIssues = data.message.filter((issue: Issue) => {
+                if (issue.dueDate) {
+                    const issueDueDate = new Date(issue.dueDate);
+                    return date < issueDueDate;
+                }
+            })
+
+            const upcomingRowsGridFormat = upcomingIssues.map((issue: Issue) => {
+                const daysUpcoming = -1*Math.round((date - new Date(issue.dueDate)) / (24*60*60*1000));
+                return({
+                    overdue: `${daysUpcoming} ${daysUpcoming <= 1 ? 'day' : 'days'}`,
+                    id: issue.title,
+                    dueDate: new Date(issue.dueDate).toDateString()
+                })
+            })
+            setUpcomingRows(upcomingRowsGridFormat);
         }
     }, [data])
-
-    const rows = [
-        {  overdue: '2 days', id: 'Create Ai functionality', dueDate: 'Dec 21, 2023'},
-        {  overdue: '4 days', id: 'Center Div', dueDate: 'Dec 24, 2023'},
-        {  overdue: '5 days', id: 'Finish Dashboard', dueDate: 'Dec 11, 2023'},
-    ]
+        
+const data = [
+    {
+        "id": "Backlog",
+        "label": "Backlog",
+        "value": 11,
+        "color": "rgb(100,240,100)"
+    },
+    {
+        "id": "Todo",
+        "label": "Todo",
+        "value": 11,
+        "color": "rgb(240,100,100)"
+    },
+    {
+        "id": "In progress",
+        "label": "In progress",
+        "value": 11,
+        "color": "rgb(100,100,100)"
+    },
+    {
+        "id": "Done",
+        "label": "Done",
+        "value": 11,
+        "color": "rgb(100,100,100)"
+    },
+    {
+        "id": "Cancelled",
+        "label": "Cancelled",
+        "value": 11,
+        "color": "rgb(255,100,100)"
+    },
+]
 
   return (
     <Box width='100%'>
@@ -89,6 +131,8 @@ function Dashboard() {
         </Box>
 
         <Box paddingInline='25px' display='grid' gap='20px' paddingBottom='25px'>
+            {/* 1st STAT ROW */}
+
             <StyledBox >
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr'}}> 
                     <Box padding='15px' borderBottom='1px solid' borderRight='1px solid' borderColor='border.main'>
@@ -124,7 +168,7 @@ function Dashboard() {
                                     const currentIssueDate = new Date(issue.dueDate)
                                     const dateDifferenceInMs = date - currentIssueDate;
                                     const msInAWeek = 604800000
-                                    return dateDifferenceInMs < msInAWeek && dateDifferenceInMs > 0;
+                                    return (dateDifferenceInMs < msInAWeek) && (dateDifferenceInMs > 0);
                                 }
                             }).length}
                         </Typography>
@@ -144,17 +188,21 @@ function Dashboard() {
                 </Box>
             </StyledBox>
 
+            {/* 2nd STAT ROW */}
+
             <Box display='grid' gap='20px' gridTemplateColumns='1fr 1fr'>
                 <Box>
-                    <Typography fontSize='19px' fontWeight='600' marginBottom='10px'>Overdue Issues</Typography>
+                    <Typography fontSize='19px' fontWeight='600' marginBottom='10px' sx={{display: 'flex', alignItems: 'center', gap: '5px'}}>
+                        Overdue Issues <ErrorOutlineOutlinedIcon fontSize="10px" sx={{color: 'rgb(255,90,90)'}}/>
+                    </Typography>
                     <StyledBox>
                         <Box width={'100%'} height={300}>
                         {
                             (!isLoading && (overdueRows != undefined)) &&
-                            <DataGrid rows={overdueRows} columns={columns} initialState={{
+                            <DataGrid rows={overdueRows} columns={columns("Overdue", "Due Date")} initialState={{
                                 pagination: {
                                     paginationModel: {
-                                        pageSize: 5,
+                                        pageSize: 3,
                                         }
                                     }
                             }}
@@ -166,14 +214,16 @@ function Dashboard() {
                     </StyledBox>
                 </Box>
                 <Box>
-                    <Typography fontSize='19px' fontWeight='600' marginBottom='10px'>Upcoming Issues</Typography>
+                    <Typography fontSize='19px' fontWeight='600' marginBottom='10px' sx={{display: 'flex', alignItems: 'center', gap: '5px'}}>
+                        Upcoming Issues <AccessTimeOutlinedIcon fontSize="10px" sx={{color: 'secondary.main'}}/>
+                    </Typography>
                     <StyledBox>
                         <Box width={'100%'} height={300}>
-                        {
-                            <DataGrid rows={rows} columns={columns} initialState={{
+                        {   ((upcomingRows != undefined) && !isLoading) &&
+                            <DataGrid rows={upcomingRows} columns={columns("Upcoming", "Start Date")} initialState={{
                                 pagination: {
                                     paginationModel: {
-                                        pageSize: 4,
+                                        pageSize: 3,
                                         }
                                     }
                             }}
@@ -186,12 +236,15 @@ function Dashboard() {
                 </Box>
             </Box>
 
+            {/* 3rd STAT ROW */}
+
             <Box display='grid' gap='20px' gridTemplateColumns='1fr 1fr'>
                 <Box>
                     <Typography fontSize='19px' fontWeight='600' marginBottom='10px'>Issues by States</Typography>
                     <StyledBox>
                         <Box width={'100%'} height={300}>
-                            <IssueStateGraph />
+                            {/* need props for data */}
+                            <IssueStateGraph data={data}/>
                         </Box>
                     </StyledBox>
                 </Box>

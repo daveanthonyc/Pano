@@ -28,13 +28,16 @@ function AllIssues() {
     }
 
     const rows = data?.message.map((issue: Issue) => {
+        const startDate = new Date(issue.startDate).toDateString()
+        const dueDate = new Date(issue.dueDate).toDateString()
+
         return {
             project: issue.project,
             id: issue.title,
             state: issue.state,
             priority: issue.priorityLevel,
-            startDate: issue.startDate,
-            dueDate: issue.dueDate
+            startDate: (startDate != "Invalid Date") ? startDate : "",
+            dueDate: (dueDate != "Invalid Date") ? dueDate : ""
         }
     })
 

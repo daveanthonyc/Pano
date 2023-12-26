@@ -1,6 +1,13 @@
 import { ResponsivePie } from '@nivo/pie';
 
-function IssueStateGraph() {
+type GraphSection = {
+    id: string,
+    label: string,
+    value: number,
+    color: string,
+}
+
+function IssueStateGraph({data} : {data: GraphSection[]}) {
   return (
     <ResponsivePie
         data={data}
@@ -38,35 +45,3 @@ function IssueStateGraph() {
 
 export default IssueStateGraph
 
-const data = [
-    {
-        "id": "Backlog",
-        "label": "Backlog",
-        "value": 11,
-        "color": "rgb(100,240,100)"
-    },
-    {
-        "id": "Todo",
-        "label": "Todo",
-        "value": 11,
-        "color": "rgb(240,100,100)"
-    },
-    {
-        "id": "In progress",
-        "label": "In progress",
-        "value": 11,
-        "color": "rgb(100,100,100)"
-    },
-    {
-        "id": "Done",
-        "label": "Done",
-        "value": 11,
-        "color": "rgb(100,100,100)"
-    },
-    {
-        "id": "Cancelled",
-        "label": "Cancelled",
-        "value": 11,
-        "color": "rgb(255,100,100)"
-    },
-]

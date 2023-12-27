@@ -87,7 +87,10 @@ function Dashboard() {
         }
     }, [data])
         
-const data = [
+// need to get values
+//
+
+const graphData = [
     {
         "id": "Backlog",
         "label": "Backlog",
@@ -244,7 +247,7 @@ const data = [
                     <StyledBox>
                         <Box width={'100%'} height={300}>
                             {/* need props for data */}
-                            <IssueStateGraph data={data}/>
+                            <IssueStateGraph data={graphData}/>
                         </Box>
                     </StyledBox>
                 </Box>

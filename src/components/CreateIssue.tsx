@@ -33,7 +33,7 @@ function CreateIssue({open, setOpen}: {open: boolean, setOpen: (arg: boolean) =>
     const [description, setDescription] = useState<string>("");
     const [project, setProject] = useState<string>("Select a Project");
     const [state, setState] = useState<string>("Backlog");
-    const [stateIcon, setStateIcon] = useState(<CircleOutlinedIcon fontSize='10px' />);
+    const [stateIcon, setStateIcon] = useState(<BlurCircularOutlinedIcon fontSize='10px' />);
     const [aiMenuOpen, setAiMenuOpen] = useState<boolean>(false);
     const [aiPrompt, setAiPrompt] = useState<string>('');
 

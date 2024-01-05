@@ -45,6 +45,11 @@ function Dashboard() {
 
     const [overdueRows, setOverdueRows] = useState(undefined);
     const [upcomingRows, setUpcomingRows] = useState(undefined);
+    const [backlog, setBacklog] = useState<number>(0);
+    const [todo, setTodo] = useState<number>(0);
+    const [inProgress, setInProgress] = useState<number>(0);
+    const [done, setDone] = useState<number>(0);
+    const [cancelled, setCancelled] = useState<number>(0);
 
     useEffect(() => {
         if (data != undefined) {
@@ -84,44 +89,91 @@ function Dashboard() {
                 })
             })
             setUpcomingRows(upcomingRowsGridFormat);
+
+
+            data.message.forEach((issue) => {
+                switch (issue.state) {
+                    case "Backlog":
+                        setBacklog(backlog+1);
+                        break;
+                    case "Todo":
+                        setTodo(todo+1);
+                        break;
+                    case "In Progress":
+                        setInProgress(inProgress+1);
+                        break;
+                    case "Done":
+                        setDone(done+1);
+                        break;
+                    case "Cancelled":
+                        setCancelled(cancelled+1);
+                        break;
+                }
+            })
+            console.log(data.message)
         }
     }, [data])
         
 // need to get values
-//
+// async issues
+// on useeffect when data is loaded, changeState of my state for graph
+// in tsx, when data loaded, use the variable
 
-const graphData = [
-    {
-        "id": "Backlog",
-        "label": "Backlog",
-        "value": 11,
-        "color": "rgb(100,240,100)"
-    },
-    {
-        "id": "Todo",
-        "label": "Todo",
-        "value": 11,
-        "color": "rgb(240,100,100)"
-    },
-    {
-        "id": "In progress",
-        "label": "In progress",
-        "value": 11,
-        "color": "rgb(100,100,100)"
-    },
-    {
-        "id": "Done",
-        "label": "Done",
-        "value": 11,
-        "color": "rgb(100,100,100)"
-    },
-    {
-        "id": "Cancelled",
-        "label": "Cancelled",
-        "value": 11,
-        "color": "rgb(255,100,100)"
-    },
-]
+const graphData = (backlog, todo, inProgress, done, cancelled) => {
+    const finalGraphData = [];
+    if (backlog > 0) {
+        finalGraphData.push(
+            {
+                "id": "Backlog",
+                "label": "Backlog",
+                "value": backlog,
+                "color": "rgb(100,240,100)"
+            },
+        )
+    }
+    if (todo > 0) {
+        finalGraphData.push(
+            {
+                "id": "Todo",
+                "label": "Todo",
+                "value": todo,
+                "color": "rgb(240,100,100)"
+            },
+        )
+    }
+    if (inProgress > 0) {
+        finalGraphData.push(
+            {
+                "id": "In Progress",
+                "label": "In Progress",
+                "value": inProgress,
+                "color": "rgb(240,100,100)"
+            },
+        )
+    }
+    if (done > 0) {
+        finalGraphData.push(
+            {
+                "id": "Done",
+                "label": "Done",
+                "value": done,
+                "color": "rgb(100,100,100)"
+            },
+        )
+    }
+    if (cancelled > 0) {
+        finalGraphData.push(
+            {
+                "id": "Cancelled",
+                "label": "Cancelled",
+                "value": cancelled,
+                "color": "rgb(255,100,100)"
+            },
+        )
+    }
+    console.log(finalGraphData);
+    return finalGraphData
+    }
 
   return (
     <Box width='100%'>
@@ -247,7 +299,10 @@ const graphData = [
                     <StyledBox>
                         <Box width={'100%'} height={300}>
                             {/* need props for data */}
-                            <IssueStateGraph data={graphData}/>
+                            {
+                            (data != undefined) && 
+                            <IssueStateGraph data={graphData(backlog, todo, inProgress, done, cancelled)}/>
+                            }
                         </Box>
                     </StyledBox>
                 </Box>

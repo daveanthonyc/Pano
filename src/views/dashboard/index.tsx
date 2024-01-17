@@ -1,4 +1,4 @@
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, CircularProgress } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import Topbar from "../../components/Topbar";
 import timeOfDayGreeting from "src/utils/timeOfDayGreeting"
@@ -186,6 +186,7 @@ const graphData = (backlog, todo, inProgress, done, cancelled) => {
         </Box>
 
         <Box paddingInline='25px' display='grid' gap='20px' paddingBottom='25px'>
+
             {/* 1st STAT ROW */}
 
             <StyledBox >
@@ -230,16 +231,21 @@ const graphData = (backlog, todo, inProgress, done, cancelled) => {
                     </Box>
                 </Box>
                 <Box sx={{ width: '800px', height: '300px' }}>
-                    <MainCalendar data={[
-                        {
-                            day: '2023-01-01',
-                            value: 1
-                        },
-                        {
-                            day: '2023-06-06',
-                            value: 3
-                        },
-                    ]}/>
+                    {
+                        isLoading ? 
+                            <CircularProgress /> 
+                                :
+                            <MainCalendar data={[
+                                {
+                                    day: '2023-01-01',
+                                    value: 1
+                                },
+                                {
+                                    day: '2023-06-06',
+                                    value: 3
+                                },
+                            ]}/>
+                    }
                 </Box>
             </StyledBox>
 

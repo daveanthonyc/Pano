@@ -328,8 +328,14 @@ function Sidebar() {
     {/* FOOTER */}
 
         <Box height='30px' borderTop='0.5px solid' borderColor='border.main' padding='10px' paddingBottom='13px'
-            sx={{height: '50px', display: 'flex', bottom: 0, backgroundColor: 'primary.main', alignItems: 'center', paddingInline: '15px'}} 
-            boxShadow={`0 0 30px 0 rgba(255,255,255,0.4)`} display='flex' justifyContent='space-between'>
+            sx={{height: '50px', 
+                display: 'flex', 
+                bottom: 0, 
+                backgroundColor: 'primary.main', 
+                alignItems: 'center', 
+                paddingInline: '15px'}} 
+                boxShadow={`0 0 30px 0 rgba(255,255,255,0.4)`} 
+                display='flex' justifyContent='space-between'>
             { open &&
                 <Box bgcolor='success.light' paddingInline='1.6rem' paddingBlock='6px' borderRadius='5px'>
                     <Typography color='success.dark' fontSize='14px'>Free Plan</Typography>

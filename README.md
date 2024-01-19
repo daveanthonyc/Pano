@@ -2,7 +2,7 @@
 An application used to manage tasks in different projects, built with React, Redux, TypeScript, CSS, Material UI, MongoDB, Express.js and Node.js.
 
 ## Project Status
-This project is currently in development. Users are able to Sign in to the demo account and create new projects and issues. The dark mode is also usable as well and the app displays information mostly pulled from a database. In addition, the Google Geimini API has been successfully implemented as well.
+This project is currently in development. Users are able to Sign in to the demo account and create new projects and issues. The dark mode is also usable as well and the app displays information mostly pulled from a database. In addition, the Google Gemini API has been successfully implemented as well.
 
 ## Project Screen Shots
 ![Sign In Page](https://i.ibb.co/cbxvB9x/dashboard.png) 
